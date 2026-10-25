@@ -28,17 +28,14 @@ struct Window::Impl {
     bool shouldClose = false;
 };
 
-Window::Window(int width, int height, const std::string& title)
-    : m_Impl(std::make_unique<Impl>())
-{
-    [NSApplication sharedApplication];
+Window::Window(int width, int height, const std::string& title) : m_Impl(std::make_unique<Impl>()) {
+    [NSApplication sharedApplication]; //elindítja az alkalmazást
     [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
     
     NSRect frame = NSMakeRect(100, 100, width, height);
     NSWindowStyleMask styleMask = NSWindowStyleMaskTitled |
                                   NSWindowStyleMaskClosable |
-                                  NSWindowStyleMaskMiniaturizable |
-                                  NSWindowStyleMaskResizable;
+                                  NSWindowStyleMaskMiniaturizable;
     
     NSWindow* window = [[NSWindow alloc] initWithContentRect:frame
                                                    styleMask:styleMask
@@ -87,4 +84,4 @@ void Window::PollEvents() {
     }
 }
 
-} // namespace Engine
+}
