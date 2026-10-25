@@ -7,4 +7,5 @@
 
 #pragma once
 
-#include "Platform/Mac/Window.h"
+#include "Platform/Mac/Window/Window.h"
+#include "Platform/Mac/Color.h"
