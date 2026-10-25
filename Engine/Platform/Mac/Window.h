@@ -6,11 +6,29 @@
 //
 
 #pragma once
+
 #include <string>
+#include <memory>
 
 namespace Engine {
+
 class Window {
 public:
-    static void Init(int width, int height, const std::strint& title);
+    Window(int width, int height, const std::string& title);
+    ~Window();
+
+    Window(const Window&) = delete;
+    Window& operator=(const Window&) = delete;
+
+    Window(Window&&) noexcept;
+    Window& operator=(Window&&) noexcept;
+
+    bool ShouldClose() const;
+    void PollEvents();
+
+private:
+    struct Impl;
+    std::unique_ptr<Impl> m_Impl;
 };
-}
+
+} // namespace Engine
