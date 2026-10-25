@@ -13,6 +13,7 @@ namespace Engine {
 
 class Window {
 public:
+    
     Window(int width, int height, const std::string& title);
     ~Window();
 
@@ -25,8 +26,16 @@ public:
     bool ShouldClose() const;
     void PollEvents();
     void SetBackgroundColor(const Color& color);
+    
+    void SetResizable(bool resizable);
+    void SetClosable(bool closable);
+    void SetMiniaturizable(bool miniaturizable);
+    
+    bool IsResizable() const;
+    bool IsClosable() const;
+    bool IsMiniaturizable() const;
 
-private:
+private:    
     struct Impl;
     std::unique_ptr<Impl> m_Impl;
 };

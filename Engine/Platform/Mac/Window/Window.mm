@@ -33,9 +33,7 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
     
     NSRect frame = NSMakeRect(100, 100, width, height);
-    NSWindowStyleMask styleMask = NSWindowStyleMaskTitled |
-                                  NSWindowStyleMaskClosable |
-                                  NSWindowStyleMaskMiniaturizable;
+    NSWindowStyleMask styleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable;
     
     NSWindow* window = [[NSWindow alloc] initWithContentRect:frame
                                                    styleMask:styleMask
@@ -89,6 +87,51 @@ void Window::SetBackgroundColor(const Color& color) {
     if (m_Impl && m_Impl->nsWindow) {
         NSColor* nsColor = [NSColor colorWithRed:color.red green:color.green blue:color.blue alpha:color.alpha];
         [m_Impl->nsWindow setBackgroundColor:nsColor];
+    }
+}
+
+bool Window::IsResizable() const {
+    if (!m_Impl || !m_Impl->nsWindow) return false;
+    return (m_Impl->nsWindow.styleMask & NSWindowStyleMaskResizable) != 0;
+}
+
+bool Window::IsClosable() const {
+    if (!m_Impl || !m_Impl->nsWindow) return false;
+    return (m_Impl->nsWindow.styleMask & NSWindowStyleMaskClosable) != 0;
+}
+
+bool Window::IsMiniaturizable() const {
+    if (!m_Impl || !m_Impl->nsWindow) return false;
+    return (m_Impl->nsWindow.styleMask & NSWindowStyleMaskMiniaturizable) != 0;
+}
+
+void Window::SetResizable(bool resizable) {
+    if (IsResizable() != resizable) {
+        if (resizable) {
+            m_Impl->nsWindow.styleMask |= NSWindowStyleMaskResizable;
+        } else {
+            m_Impl->nsWindow.styleMask &= ~NSWindowStyleMaskResizable;
+        }
+    }
+}
+
+void Window::SetClosable(bool closable) {
+    if (IsClosable() != closable) {
+        if (closable) {
+            m_Impl->nsWindow.styleMask |= NSWindowStyleMaskClosable;
+        } else {
+            m_Impl->nsWindow.styleMask &= ~NSWindowStyleMaskClosable;
+        }
+    }
+}
+
+void Window::SetMiniaturizable(bool miniaturizable) {
+    if (IsMiniaturizable() != miniaturizable) {
+        if (miniaturizable) {
+            m_Impl->nsWindow.styleMask |= NSWindowStyleMaskMiniaturizable;
+        } else {
+            m_Impl->nsWindow.styleMask &= ~NSWindowStyleMaskMiniaturizable;
+        }
     }
 }
 
