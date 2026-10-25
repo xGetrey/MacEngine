@@ -34,6 +34,9 @@ public:
     bool IsResizable() const;
     bool IsClosable() const;
     bool IsMiniaturizable() const;
+    
+    int GetWindowWidth() const;
+    int GetWindowHeight() const;
 
 private:    
     struct Impl;

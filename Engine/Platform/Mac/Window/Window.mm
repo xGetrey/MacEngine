@@ -53,6 +53,7 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     
     m_Impl->nsWindow = window;
     m_Impl->delegate = delegate;
+    
 }
 
 Window::~Window() {
@@ -133,6 +134,18 @@ void Window::SetMiniaturizable(bool miniaturizable) {
             m_Impl->nsWindow.styleMask &= ~NSWindowStyleMaskMiniaturizable;
         }
     }
+}
+
+int Window::GetWindowWidth() const {
+    if (!m_Impl || !m_Impl->nsWindow) return 0;
+    NSRect bounds = [[m_Impl->nsWindow contentView] bounds];
+    return static_cast<int>(bounds.size.width);
+}
+
+int Window::GetWindowHeight() const {
+    if (!m_Impl || !m_Impl->nsWindow) return 0;
+    NSRect bounds = [[m_Impl->nsWindow contentView] bounds];
+    return static_cast<int>(bounds.size.height);
 }
 
 }
