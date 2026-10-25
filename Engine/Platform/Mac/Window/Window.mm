@@ -44,6 +44,7 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     
     NSString* nsTitle = [NSString stringWithUTF8String:title.c_str()];
     [window setTitle:nsTitle];
+    [window center];
     
     EngineWindowDelegate* delegate = [[EngineWindowDelegate alloc] init];
     delegate.shouldClosePtr = &m_Impl->shouldClose;
@@ -81,6 +82,13 @@ void Window::PollEvents() {
                                                  dequeue:YES]) {
         [NSApp sendEvent:event];
         [NSApp updateWindows];
+    }
+}
+
+void Window::SetBackgroundColor(const Color& color) {
+    if (m_Impl && m_Impl->nsWindow) {
+        NSColor* nsColor = [NSColor colorWithRed:color.red green:color.green blue:color.blue alpha:color.alpha];
+        [m_Impl->nsWindow setBackgroundColor:nsColor];
     }
 }
 

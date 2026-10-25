@@ -20,8 +20,9 @@
 		000000000000000000000010 /* Engine */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			explicitFileTypes = {
-				MacEngine.hpp = sourcecode.cpp.cpp;
-				Platform/Mac/Window.h = sourcecode.cpp.cpp;
+				MacEngine.h = sourcecode.cpp.cpp;
+				Platform/Mac/Color.h = sourcecode.c;
+				Platform/Mac/Window/Window.h = sourcecode.cpp.cpp;
 			};
 			path = Engine;
 			sourceTree = "<group>";
