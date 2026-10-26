@@ -10,6 +10,7 @@
 #include "Platform/Mac/Window/Window.h"
 #include "Platform/Mac/Color.h"
 #include "Platform/Mac/Display/DisplayMetrics.h"
+#include "Platform/Mac/Window/Menubar.h"
 
 namespace Engine {
 inline int GetWidth() {

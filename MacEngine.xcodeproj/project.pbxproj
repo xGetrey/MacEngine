@@ -23,6 +23,7 @@
 				MacEngine.h = sourcecode.cpp.cpp;
 				Platform/Mac/Color.h = sourcecode.c;
 				Platform/Mac/Display/DisplayMetrics.h = sourcecode.cpp.cpp;
+				Platform/Mac/Window/Menubar.h = sourcecode.cpp.cpp;
 				Platform/Mac/Window/Window.h = sourcecode.cpp.cpp;
 			};
 			path = Engine;
