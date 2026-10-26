@@ -8,6 +8,8 @@
 #import "Window.h"
 #import <Cocoa/Cocoa.h>
 
+#include <iostream>
+
 @interface EngineWindowDelegate : NSObject <NSWindowDelegate>
 @property (nonatomic, assign) bool* shouldClosePtr;
 @end
@@ -54,6 +56,8 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     
     m_Impl->nsWindow = window;
     m_Impl->delegate = delegate;
+    
+    Window::Get().SetIcon("Engine/MacEngineIcon.png");
 }
 
 Window::~Window() {
@@ -147,6 +151,19 @@ int Window::GetWindowHeight() const {
     if (!m_Impl || !m_Impl->nsWindow) return 0;
     NSRect bounds = [[m_Impl->nsWindow contentView] bounds];
     return static_cast<int>(bounds.size.height);
+}
+
+bool Window::SetIcon(const std::string filepath) {
+    NSString *nsPath = [NSString stringWithUTF8String:filepath.c_str()];
+    NSImage *icon = [[NSImage alloc] initWithContentsOfFile:nsPath];
+    
+    if (!icon) {
+        std::cout << "Set icon fail!" << std::endl;
+        return false;
+    }
+    
+    [NSApp setApplicationIconImage:icon];
+    return true;
 }
 
 } // namespace Engine

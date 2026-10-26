@@ -40,6 +40,8 @@ public:
 
     int GetWindowWidth() const;
     int GetWindowHeight() const;
+    
+    bool SetIcon(const std::string filepath);
 
 private:    
     struct Impl;
