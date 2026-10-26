@@ -9,6 +9,7 @@
 
 #include "Platform/Mac/Window/Window.h"
 #include "Platform/Mac/Color.h"
+#include "Platform/Mac/Display/DisplayMetrics.h"
 
 namespace Engine {
 inline int GetWidth() {
@@ -18,4 +19,5 @@ inline int GetWidth() {
 inline int GetHeight() {
     return Window::Get().GetWindowHeight();
 }
-}
+
+} // Engine namespace
