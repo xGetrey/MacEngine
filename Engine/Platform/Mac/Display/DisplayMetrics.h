@@ -10,21 +10,22 @@
 #include <string>
 
 namespace Engine {
-namespace Display {
+namespace Detail {
 
-class DisplayMetrics {
+class DisplayMetricsImpl {
 public:
     static int GetWidth();
     static int GetHeight();
 
     static int GetVisibleWidth();
     static int GetVisibleHeight();
-    
+
     static float GetScaleFactor();
-    
     static std::string GetDisplayID();
 };
 
-} // namespace Display
+} // namespace Detail
+
+inline Detail::DisplayMetricsImpl DisplayMetrics;
 
 } // namespace Engine

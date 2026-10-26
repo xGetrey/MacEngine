@@ -9,40 +9,38 @@
 #import <Cocoa/Cocoa.h>
 #include <string>
 
-namespace Engine {
-namespace Display {
+namespace Engine::Detail {
 
-int DisplayMetrics::GetWidth() {
+int DisplayMetricsImpl::GetWidth() {
     NSScreen* screen = [NSScreen mainScreen];
     return screen ? static_cast<int>(screen.frame.size.width) : 0;
 }
 
-int DisplayMetrics::GetHeight() {
+int DisplayMetricsImpl::GetHeight() {
     NSScreen* screen = [NSScreen mainScreen];
     return screen ? static_cast<int>(screen.frame.size.height) : 0;
 }
 
-int DisplayMetrics::GetVisibleWidth() {
+int DisplayMetricsImpl::GetVisibleWidth() {
     NSScreen* screen = [NSScreen mainScreen];
     return screen ? static_cast<int>(screen.visibleFrame.size.width) : 0;
 }
 
-int DisplayMetrics::GetVisibleHeight() {
+int DisplayMetricsImpl::GetVisibleHeight() {
     NSScreen* screen = [NSScreen mainScreen];
     return screen ? static_cast<int>(screen.visibleFrame.size.height) : 0;
 }
 
-float DisplayMetrics::GetScaleFactor() {
+float DisplayMetricsImpl::GetScaleFactor() {
     NSScreen* screen = [NSScreen mainScreen];
     return screen ? screen.backingScaleFactor : 0;
 }
 
-std::string DisplayMetrics::GetDisplayID() {
+std::string DisplayMetricsImpl::GetDisplayID() {
     NSScreen* screen = [NSScreen mainScreen];
     NSString* name = [screen localizedName];
     return name ? [name UTF8String] : "Unknown Display";
 }
-} // namespace Display
 
 } // namespace Engine
 

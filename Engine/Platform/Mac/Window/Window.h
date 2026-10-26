@@ -5,6 +5,8 @@
 //  Created by Gulyás Péter István on 2026. 10. 25..
 //
 
+#pragma once
+
 #include <string>
 #include <memory>
 #include "../Color.h"
@@ -13,7 +15,6 @@ namespace Engine {
 
 class Window {
 public:
-    
     Window(int width, int height, const std::string& title);
     ~Window();
 
@@ -22,21 +23,21 @@ public:
 
     Window(Window&&) noexcept;
     Window& operator=(Window&&) noexcept;
-    
+
     static Window& Get() { return *s_Instance; }
 
     bool ShouldClose() const;
     void PollEvents();
     void SetBackgroundColor(const Color& color);
-    
+
     void SetResizable(bool resizable);
     void SetClosable(bool closable);
     void SetMiniaturizable(bool miniaturizable);
-    
+
     bool IsResizable() const;
     bool IsClosable() const;
     bool IsMiniaturizable() const;
-    
+
     int GetWindowWidth() const;
     int GetWindowHeight() const;
 

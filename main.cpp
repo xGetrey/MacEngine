@@ -14,12 +14,14 @@ int main() {
     window.SetBackgroundColor(Engine::Color(100.0f, 25.0f, 255.0f, 100.0f));
     window.SetResizable(true);
     
-    std::cout << Engine::Display::DisplayMetrics::GetScaleFactor() << std::endl;
+    std::cout << Engine::DisplayMetrics.GetWidth();
+    
+    /*std::cout << Engine::Display::DisplayMetrics::GetScaleFactor() << std::endl;
     std::cout << Engine::Display::DisplayMetrics::GetWidth() << std::endl;
     std::cout << Engine::Display::DisplayMetrics::GetHeight() << std::endl;
     std::cout << Engine::Display::DisplayMetrics::GetVisibleWidth() << std::endl;
     std::cout << Engine::Display::DisplayMetrics::GetVisibleHeight() << std::endl;
-    std::cout << Engine::Display::DisplayMetrics::GetDisplayID() << std::endl;
+    std::cout << Engine::Display::DisplayMetrics::GetDisplayID() << std::endl;*/
     
     while (!window.ShouldClose()) {
         window.PollEvents();
