@@ -22,6 +22,8 @@ public:
 
     Window(Window&&) noexcept;
     Window& operator=(Window&&) noexcept;
+    
+    static Window& Get() { return *s_Instance; }
 
     bool ShouldClose() const;
     void PollEvents();
@@ -41,6 +43,7 @@ public:
 private:    
     struct Impl;
     std::unique_ptr<Impl> m_Impl;
+    static inline Window* s_Instance = nullptr;
 };
 
 } // namespace Engine

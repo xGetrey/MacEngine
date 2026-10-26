@@ -29,6 +29,7 @@ struct Window::Impl {
 };
 
 Window::Window(int width, int height, const std::string& title) : m_Impl(std::make_unique<Impl>()) {
+    s_Instance = this;
     [NSApplication sharedApplication]; //elindítja az alkalmazást
     [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
     
@@ -53,10 +54,10 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     
     m_Impl->nsWindow = window;
     m_Impl->delegate = delegate;
-    
 }
 
 Window::~Window() {
+    s_Instance = nullptr;
     if (m_Impl) {
         if (m_Impl->nsWindow) {
             [m_Impl->nsWindow setDelegate:nil];
@@ -148,4 +149,4 @@ int Window::GetWindowHeight() const {
     return static_cast<int>(bounds.size.height);
 }
 
-}
+} // namespace Engine

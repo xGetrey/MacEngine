@@ -9,3 +9,13 @@
 
 #include "Platform/Mac/Window/Window.h"
 #include "Platform/Mac/Color.h"
+
+namespace Engine {
+inline int GetWidth() {
+    return Window::Get().GetWindowWidth();
+}
+
+inline int GetHeight() {
+    return Window::Get().GetWindowHeight();
+}
+}
