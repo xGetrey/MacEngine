@@ -42,5 +42,34 @@ std::string DisplayMetricsImpl::GetDisplayID() {
     return name ? [name UTF8String] : "Unknown Display";
 }
 
+float DisplayMetricsImpl::GetDisplayHz() {
+    NSScreen* screen = [NSScreen mainScreen];
+    
+    if (@available(macOS 12.0, *)) {
+        NSInteger maxFPS = screen.maximumFramesPerSecond;
+        return static_cast<float>(maxFPS);
+    }
+    
+    NSDictionary* description = [screen deviceDescription];
+    NSNumber* screenNumber = [description objectForKey:@"NSScreenNumber"];
+    if (screenNumber) {
+        CGDirectDisplayID displayID = [screenNumber unsignedIntValue];
+        CGDisplayModeRef mode = CGDisplayCopyDisplayMode(displayID);
+        if (mode) {
+            double rate = CGDisplayModeGetRefreshRate(mode);
+            CGDisplayModeRelease(mode);
+            if (rate > 0.0) {
+                return static_cast<float>(rate);
+            }
+        }
+    }
+    return 60.0;
+}
+
+bool DisplayMetricsImpl::isHDRSupported() {
+    NSScreen* screen = [NSScreen mainScreen];
+    return screen.maximumPotentialExtendedDynamicRangeColorComponentValue > 1.0;
+}
+
 } // namespace Engine
 

@@ -22,6 +22,10 @@ public:
 
     static float GetScaleFactor();
     static std::string GetDisplayID();
+    
+    static float GetDisplayHz();
+    
+    static bool isHDRSupported();
 };
 
 } // namespace Detail

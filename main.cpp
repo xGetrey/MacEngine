@@ -14,7 +14,11 @@ int main() {
     window.SetBackgroundColor(Engine::Color(100.0f, 25.0f, 255.0f, 100.0f));
     window.SetResizable(true);
     
-    std::cout << Engine::DisplayMetrics.GetWidth();
+    std::cout << std::boolalpha;
+    
+    std::cout << Engine::DisplayMetrics.GetWidth() << std::endl;
+    std::cout << Engine::DisplayMetrics.GetDisplayHz() << std::endl;
+    std::cout << Engine::DisplayMetrics.isHDRSupported();
     
     /*std::cout << Engine::Display::DisplayMetrics::GetScaleFactor() << std::endl;
     std::cout << Engine::Display::DisplayMetrics::GetWidth() << std::endl;
