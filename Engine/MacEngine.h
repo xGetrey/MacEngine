@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include "Platform/Mac/Window/Window.h"
+#include "Platform/Mac/WindowManager/Window/Window.h"
 #include "Platform/Mac/Color.h"
 #include "Platform/Mac/Display/DisplayMetrics.h"
-#include "Platform/Mac/Window/Menubar.h"
+#include "Platform/Mac/WindowManager/Menubar/MenubarAPI.h"
 
 namespace Engine {
 inline int GetWidth() {

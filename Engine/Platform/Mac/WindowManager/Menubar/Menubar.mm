@@ -9,6 +9,7 @@
 #include "Menubar.h"
 #include <iostream>
 #import <objc/runtime.h>
+#include "../Window/Window.h"
 
 @interface MenuTargetProxy : NSObject {
     std::function<void()> m_Callback;
@@ -39,12 +40,14 @@ Menubar& Menubar::Get() {
     return instance;
 }
 
-void Menubar::AddMenu(const MenuData& menu) {
+void Menubar::AddMenu(const MenuItems::MenuData& menu) {
     m_Menus.push_back(menu);
 }
 
 void Menubar::Build() {
     NSMenu *mainMenu = [[NSMenu alloc] init];
+
+    
     
     NSMenuItem *appMenuItem = [[NSMenuItem alloc] init];
     NSMenu *appMenu = [[NSMenu alloc] init];
