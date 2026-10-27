@@ -21,8 +21,8 @@ struct MenuItemData {
     
     MenuItemData& shortcut(std::string shortcut);
     MenuItemData& onClick(std::function<void()> func);
-    MenuItemData& separate();
-    MenuItemData& end(Engine::MenuItems::MenuData& section);
+    //MenuItemData& separate();
+    //MenuItemData& end(Engine::MenuItems::MenuData& section);
     
     //MenuItemData(std::string title, std::string shortcut, std::function<void()> onClick, bool isSeparator) : title(title), shortcut(shortcut), onClick(onClick), isSeparator(isSeparator) {}
 };

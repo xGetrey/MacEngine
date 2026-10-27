@@ -17,7 +17,8 @@ struct MenuData {
     std::string title;
     std::vector<MenuItems::MenuItemData> items;
     
-    void AddMenuItem(MenuItems::MenuItemData item);
-    MenuData& end();
+    MenuData& Item(MenuItems::MenuItemData item);
+    MenuData& Separator();
+    MenuData& registerMenu();
 };
 }

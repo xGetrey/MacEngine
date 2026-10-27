@@ -19,6 +19,14 @@ int main() {
     window.SetResizable(true);
     window.SetMiniaturizable(true);
     
+    Engine::MenubarApi::menuSection("Teszt")
+        .Item(Engine::menuItem("Teszt").onClick(teszt))
+        .Separator()
+        .Item(Engine::menuItem("Teszt").onClick(teszt).shortcut("g"))
+        .registerMenu();
+    Engine::BuildMenubar();
+    
+    /*
     Engine::MenuItems::MenuData teszt0 = Engine::MenubarApi::menuSection("Teszt");
     Engine::MenubarApi::menuItem("teszt").onClick(teszt).shortcut("b").end(teszt0);
     Engine::MenubarApi::menuItem("").separate().end(teszt0);
@@ -51,7 +59,7 @@ int main() {
     tesztt5.end();
     tesztt6.end();
     tesztt7.end();
-    Engine::MenubarApi::BuildMenubar();
+    Engine::MenubarApi::BuildMenubar();*/
     
     std::cout << std::boolalpha;
 

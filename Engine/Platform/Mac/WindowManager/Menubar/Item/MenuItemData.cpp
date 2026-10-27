@@ -20,7 +20,7 @@ Engine::MenuItems::MenuItemData& Engine::MenuItems::MenuItemData::onClick(std::f
     onclick = func;
     return *this;
 }
-
+/*
 Engine::MenuItems::MenuItemData& Engine::MenuItems::MenuItemData::separate() {
     isSeparator = true;
     return *this;
@@ -30,3 +30,4 @@ Engine::MenuItems::MenuItemData& Engine::MenuItems::MenuItemData::end(Engine::Me
     section.AddMenuItem(*this);
     return *this;
 }
+ */

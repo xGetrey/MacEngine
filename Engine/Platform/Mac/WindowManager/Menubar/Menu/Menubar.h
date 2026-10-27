@@ -22,7 +22,11 @@ public:
     void Build();
     static Menubar& Get();
     
+    Menubar(const Menubar&) = delete;
+    Menubar& operator=(const Menubar&) = delete;
+    
 private:
+    Menubar() = default;
     std::vector<MenuItems::MenuData> m_Menus;
 };
 
