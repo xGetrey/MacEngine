@@ -11,6 +11,9 @@
 #include "Platform/Mac/Color.h"
 #include "Platform/Mac/Display/DisplayMetrics.h"
 #include "Platform/Mac/WindowManager/Menubar/MenubarAPI.h"
+#include "Platform/Mac/WindowManager/Menubar/Menu/Menubar.h"
+#include "Platform/Mac/WindowManager/Menubar/Section/MenuData.h"
+#include "Platform/Mac/WindowManager/Menubar/Item/MenuItemData.h"
 
 namespace Engine {
 inline int GetWidth() {

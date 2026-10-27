@@ -10,8 +10,11 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include "Menubar.h"
 #include <iostream>
+
+#include "Section/MenuData.h"
+#include "Item/MenuItemData.h"
+#include "Menu/Menubar.h"
 
 
 namespace Engine {
@@ -23,8 +26,14 @@ inline Engine::MenuItems::MenuData menuSection(std::string title) {
     return section;
 }
 
+inline Engine::MenuItems::MenuItemData menuItem(std::string title) {
+    Engine::MenuItems::MenuItemData item = Engine::MenuItems::MenuItemData();
+    item.title = title;
+    return item;
+}
+
 inline void BuildMenubar() {
-    Engine::Menubar::Get().Build();
+    Engine::MenuItems::Menubar::Get().Build();
 }
 
 }

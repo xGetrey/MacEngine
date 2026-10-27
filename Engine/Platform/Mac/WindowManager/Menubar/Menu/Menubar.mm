@@ -9,7 +9,7 @@
 #include "Menubar.h"
 #include <iostream>
 #import <objc/runtime.h>
-#include "../Window/Window.h"
+#include "../../Window/Window.h"
 
 @interface MenuTargetProxy : NSObject {
     std::function<void()> m_Callback;
@@ -33,7 +33,7 @@
 }
 @end
 
-namespace Engine {
+namespace Engine::MenuItems {
 
 Menubar& Menubar::Get() {
     static Menubar instance;
@@ -68,10 +68,10 @@ void Menubar::Build() {
             }
             
             NSString *title = [NSString stringWithUTF8String:itemData.title.c_str()];
-            NSString *shortcut = itemData.shortcut.empty() ? @"" : [NSString stringWithUTF8String:itemData.shortcut.c_str()];
+            NSString *shortcut = itemData.shortc.empty() ? @"" : [NSString stringWithUTF8String:itemData.shortc.c_str()];
             
             NSMenuItem *nsItem = [[NSMenuItem alloc] initWithTitle:title action:@selector(menuItemClicked:) keyEquivalent:shortcut];
-            MenuTargetProxy *proxy = [[MenuTargetProxy alloc] initWithCallback:itemData.onClick];
+            MenuTargetProxy *proxy = [[MenuTargetProxy alloc] initWithCallback:itemData.onclick];
             [nsItem setTarget:proxy];
             
             objc_setAssociatedObject(nsItem, "CPlusPlusCallbackProxy", proxy, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

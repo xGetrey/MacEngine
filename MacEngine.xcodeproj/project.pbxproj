@@ -23,8 +23,10 @@
 				MacEngine.h = sourcecode.cpp.cpp;
 				Platform/Mac/Color.h = sourcecode.c;
 				Platform/Mac/Display/DisplayMetrics.h = sourcecode.cpp.cpp;
-				Platform/Mac/WindowManager/Menubar/Menubar.h = sourcecode.cpp.cpp;
+				Platform/Mac/WindowManager/Menubar/Item/MenuItemData.h = sourcecode.cpp.cpp;
+				Platform/Mac/WindowManager/Menubar/Menu/Menubar.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Menubar/MenubarAPI.h = sourcecode.cpp.cpp;
+				Platform/Mac/WindowManager/Menubar/Section/MenuData.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Window/Window.h = sourcecode.cpp.cpp;
 			};
 			path = Engine;
