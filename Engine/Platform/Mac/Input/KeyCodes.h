@@ -1,0 +1,26 @@
+//
+//  KeyCodes.h
+//  MyTool
+//
+//  Created by Gulyás Péter István on 2026. 10. 28..
+//
+
+#pragma once
+
+namespace Engine {
+
+enum class Key {
+    Unknow = 0,
+    A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, S, T, R, U, V, W, X, Y, Z,
+    Num1, Num2, Num3, Num4, Num5, Num6, Num7, Num8, Num9,
+    Space, Enter, Escape, Tab, Backspace,
+    Left, Right, Up, Down,
+    LeftShift, RightShift, LeftControl, RightControl,
+    LeftAlt, RightAlt, LeftCommanf, RifghtCommand,
+    F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12,
+    Count
+};
+
+enum class MouseButton { Left, Right, Middle, Count };
+
+}
