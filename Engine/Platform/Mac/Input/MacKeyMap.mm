@@ -8,7 +8,8 @@
 #include <Carbon/Carbon.h>
 #include "KeyCodes.h"
 
-Engine::Key TranslateKey(unsigned short code) {
+namespace Engine {
+Key TranslateKey(unsigned short code) {
     switch (code) {
         case kVK_ANSI_A: return Engine::Key::A;
         case kVK_ANSI_B: return Engine::Key::B;
@@ -65,7 +66,7 @@ Engine::Key TranslateKey(unsigned short code) {
         case kVK_Control: return Engine::Key::LeftControl;
         case kVK_RightOption: return Engine::Key::RightOption;
         case kVK_Option: return Engine::Key::LeftOption;
-        case kVK_RightCommand: return  Engine::Key::RifghtCommand;
+        case kVK_RightCommand: return  Engine::Key::RightCommand;
         case kVK_Command: return Engine::Key::LeftCommand;
             
         case kVK_F1: return Engine::Key::F1;
@@ -84,4 +85,5 @@ Engine::Key TranslateKey(unsigned short code) {
             
         default: return Engine::Key::Unknow;
     }
+}
 }

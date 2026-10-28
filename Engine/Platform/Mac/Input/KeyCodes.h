@@ -16,7 +16,7 @@ enum class Key {
     Space, Enter, Escape, Tab, Backspace,
     Left, Right, Up, Down,
     LeftShift, RightShift, LeftControl, RightControl,
-    LeftOption, RightOption, LeftCommand, RifghtCommand,
+    LeftOption, RightOption, LeftCommand, RightCommand,
     F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12,
     Count
 };

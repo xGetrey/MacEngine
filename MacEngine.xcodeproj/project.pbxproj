@@ -20,6 +20,7 @@
 		000000000000000000000010 /* Engine */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			explicitFileTypes = {
+				Core/Vector2.h = sourcecode.cpp.cpp;
 				MacEngine.h = sourcecode.cpp.cpp;
 				Platform/Mac/Color.h = sourcecode.c;
 				Platform/Mac/Display/DisplayMetrics.h = sourcecode.cpp.cpp;

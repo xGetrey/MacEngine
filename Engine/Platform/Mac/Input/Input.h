@@ -8,6 +8,7 @@
 #pragma once
 
 #include "KeyCodes.h"
+#include "../../../Core/Vector2.h"
 
 namespace Engine {
 
@@ -15,15 +16,15 @@ bool IsKeyDown(Key key);
 bool IsKeyPressed(Key key);
 bool IsKeyReleased(Key key);
 
-bool IsMouseButtonDown(Key key);
-bool IsMouseButtonPressed(Key key);
-bool IsMouseButtonReleased(Key key);
+bool IsMouseButtonDown(MouseButton button);
+bool IsMouseButtonPressed(MouseButton button);
+bool IsMouseButtonReleased(MouseButton button);
 
 float GetMouseX();
 float GetMouseY();
 float GetMouseDeltaX();
 float GetMouseDeltaY();
-float GetMousePos();
+Engine::Vector2 GetMousePos();
 float GetScrollY();
 
 namespace Internal {
