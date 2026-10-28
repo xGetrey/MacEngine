@@ -23,6 +23,7 @@
 				MacEngine.h = sourcecode.cpp.cpp;
 				Platform/Mac/Color.h = sourcecode.c;
 				Platform/Mac/Display/DisplayMetrics.h = sourcecode.cpp.cpp;
+				Platform/Mac/Input/Input.h = sourcecode.cpp.cpp;
 				Platform/Mac/Input/KeyCodes.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Menubar/Item/MenuItemData.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Menubar/Menu/Menubar.h = sourcecode.cpp.cpp;
