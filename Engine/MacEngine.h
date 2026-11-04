@@ -11,6 +11,7 @@
 #include "Platform/Mac/Color.h"
 #include "Platform/Mac/Display/DisplayMetrics.h"
 #include "Platform/Mac/WindowManager/Menubar/MenubarAPI.h"
+#include "Platform/Mac/Input/Input.h"
 
 
 namespace Engine {

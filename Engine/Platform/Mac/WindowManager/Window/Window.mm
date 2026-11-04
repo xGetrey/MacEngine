@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 #include <iostream>
+#include "../../Input/Input.h"
+#include "../../Input/MacKeyMap.h"
 
 @interface EngineWindowDelegate : NSObject <NSWindowDelegate>
 @property (nonatomic, assign) bool* shouldClosePtr;
@@ -19,6 +21,9 @@
     if (self.shouldClosePtr) {
         *self.shouldClosePtr = true;
     }
+}
+- (void)windowDidResignKey:(NSNotification *)notification {
+    Engine::Internal::Input_ClearAll();
 }
 @end
 
@@ -80,10 +85,19 @@ bool Window::ShouldClose() const {
 }
 
 void Window::PollEvents() {
+    Internal::Input_BeginFrame();
     while (NSEvent* event = [NSApp nextEventMatchingMask:NSEventMaskAny
                                                untilDate:[NSDate distantPast]
                                                   inMode:NSDefaultRunLoopMode
                                                  dequeue:YES]) {
+        NSEventType type = event.type;
+        if (type == NSEventTypeKeyDown || type == NSEventTypeKeyUp) {
+            Internal::Input_SetKey(TranslateKey(event.keyCode), type == NSEventTypeKeyUp);
+            bool cmd = (event.modifierFlags & NSEventModifierFlagCommand) != 0;
+            if (!cmd) continue;
+            
+        }
+        
         [NSApp sendEvent:event];
         [NSApp updateWindows];
     }

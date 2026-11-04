@@ -40,6 +40,7 @@
 				Platform/Mac/Input/Input.cpp = sourcecode.cpp.cpp;
 				Platform/Mac/Input/Input.h = sourcecode.cpp.h;
 				Platform/Mac/Input/KeyCodes.h = sourcecode.cpp.cpp;
+				Platform/Mac/Input/MacKeyMap.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Menubar/Item/MenuItemData.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Menubar/Menu/Menubar.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Menubar/MenubarAPI.h = sourcecode.cpp.cpp;
