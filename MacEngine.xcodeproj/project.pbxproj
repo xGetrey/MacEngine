@@ -16,15 +16,29 @@
 		FF4DEEB2308E637800867503 /* CMakeList.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeList.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		FFCA59443092984C006907D2 /* Exceptions for "Engine" folder in "Compile Sources" phase from "MyTool" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 000000000000000120000000 /* Sources */;
+			membershipExceptions = (
+				Platform/Mac/Input/Input.h,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		000000000000000000000010 /* Engine */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FFCA59443092984C006907D2 /* Exceptions for "Engine" folder in "Compile Sources" phase from "MyTool" target */,
+			);
 			explicitFileTypes = {
 				Core/Vector2.h = sourcecode.cpp.cpp;
 				MacEngine.h = sourcecode.cpp.cpp;
 				Platform/Mac/Color.h = sourcecode.c;
 				Platform/Mac/Display/DisplayMetrics.h = sourcecode.cpp.cpp;
-				Platform/Mac/Input/Input.h = sourcecode.cpp.cpp;
+				Platform/Mac/Input/Input.cpp = sourcecode.cpp.cpp;
+				Platform/Mac/Input/Input.h = sourcecode.cpp.h;
 				Platform/Mac/Input/KeyCodes.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Menubar/Item/MenuItemData.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Menubar/Menu/Menubar.h = sourcecode.cpp.cpp;
