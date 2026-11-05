@@ -100,6 +100,8 @@ int main() {
         
         if (Engine::IsKeyPressed(Engine::Key::LeftOption)) std::cout << "LeftCommand" << std::endl;
         if (Engine::IsKeyPressed(Engine::Key::RightCommand)) std::cout << "RightCommand" << std::endl;
+        
+        if (Engine::IsKeyReleased(Engine::Key::K)) std::cout << "K elengedve" << std::endl;
     }
     
     return 0;

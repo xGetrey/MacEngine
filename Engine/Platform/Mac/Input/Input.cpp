@@ -32,6 +32,13 @@ bool IsKeyPressed(Key key) {
     if (!IsValid(i)) return false;
     return s_Keys[i] && !sPrevKeys[i];
 }
+
+bool IsKeyReleased(Key key) {
+    int i = ToIndex(key);
+    if (!IsValid(i)) return false;
+    return !s_Keys[i] && sPrevKeys[i];
+}
+
 namespace Internal {
 void Input_BeginFrame() {
     std::copy(s_Keys, s_Keys + KeyCount, sPrevKeys);

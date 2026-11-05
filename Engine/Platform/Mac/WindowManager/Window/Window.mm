@@ -92,7 +92,7 @@ void Window::PollEvents() {
                                                  dequeue:YES]) {
         NSEventType type = event.type;
         if (type == NSEventTypeKeyDown || type == NSEventTypeKeyUp) {
-            Internal::Input_SetKey(TranslateKey(event.keyCode), type == NSEventTypeKeyUp);
+            Internal::Input_SetKey(TranslateKey(event.keyCode), type == NSEventTypeKeyDown);
             bool cmd = (event.modifierFlags & NSEventModifierFlagCommand) != 0;
             if (!cmd) continue;
             
