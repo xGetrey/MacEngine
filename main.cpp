@@ -37,6 +37,14 @@ int main() {
         //std::cout << Engine::GetWidth() << " " << Engine::GetHeight() << std::endl;
         //std::cout << Engine::GetMousePos().x << std::endl;
         
+        if (Engine::IsKeyPressed(Engine::Key::LeftShift))    std::cout << "Bal Shift LE" << std::endl;
+        if (Engine::IsKeyReleased(Engine::Key::LeftShift))   std::cout << "Bal Shift FEL" << std::endl;
+        if (Engine::IsKeyPressed(Engine::Key::RightShift))   std::cout << "Jobb Shift LE" << std::endl;
+        if (Engine::IsKeyPressed(Engine::Key::RightOption))   std::cout << "Jobb Opt LE" << std::endl;
+        if (Engine::IsKeyPressed(Engine::Key::LeftOption))   std::cout << "Bal Option LE" << std::endl;
+        if (Engine::IsKeyPressed(Engine::Key::LeftCommand))  std::cout << "Bal Command LE" << std::endl;
+        if (Engine::IsKeyPressed(Engine::Key::LeftControl))  std::cout << "Bal Control LE" << std::endl;
+        
         if (Engine::IsMouseButtonPressed(Engine::MouseButton::Left)) std::cout << "Left" << std::endl;
         
         if (Engine::IsKeyPressed(Engine::Key::A)) std::cout << "A" << std::endl;

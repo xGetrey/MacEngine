@@ -98,6 +98,11 @@ void Window::PollEvents() {
             if (!cmd) continue;
 
         }
+        
+        if (type == NSEventTypeFlagsChanged) {
+            Internal::Input_SetKey(TranslateKey(event.keyCode), IsModifierDown(event.keyCode, event.modifierFlags));
+        }
+        
         switch (type) {
             case NSEventTypeLeftMouseDown:  Internal::Input_SetMouseButton(MouseButton::Left, true);   break;
             case NSEventTypeLeftMouseUp:    Internal::Input_SetMouseButton(MouseButton::Left, false);  break;

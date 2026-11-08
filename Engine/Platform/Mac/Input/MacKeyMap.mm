@@ -8,6 +8,7 @@
 #include <Carbon/Carbon.h>
 #include "KeyCodes.h"
 #include <iostream>
+#include <IOKit/hidsystem/IOLLEvent.h>
 
 namespace Engine {
 Key TranslateKey(unsigned short code) {
@@ -87,6 +88,20 @@ Key TranslateKey(unsigned short code) {
         default:
             std::cout << "Unknown Input" << std::endl;
             return Engine::Key::Unknow;
+    }
+}
+
+bool IsModifierDown(unsigned short code, unsigned long flags) {
+    switch (code) {
+        case kVK_Shift:        return (flags & NX_DEVICELSHIFTKEYMASK) != 0;
+        case kVK_RightShift:   return (flags & NX_DEVICERSHIFTKEYMASK) != 0;
+        case kVK_Control:      return (flags & NX_DEVICELCTLKEYMASK) != 0;
+        case kVK_RightControl: return (flags & NX_DEVICERCTLKEYMASK) != 0;
+        case kVK_Option:       return (flags & NX_DEVICELALTKEYMASK) != 0;
+        case kVK_RightOption:  return (flags & NX_DEVICERALTKEYMASK) != 0;
+        case kVK_Command:      return (flags & NX_DEVICELCMDKEYMASK) != 0;
+        case kVK_RightCommand: return (flags & NX_DEVICERCMDKEYMASK) != 0;
+        default: return false;
     }
 }
 }

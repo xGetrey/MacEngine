@@ -10,5 +10,5 @@
 
 namespace Engine {
 Key TranslateKey(unsigned short code);
+bool IsModifierDown(unsigned short code, unsigned long flags);
 }
-
