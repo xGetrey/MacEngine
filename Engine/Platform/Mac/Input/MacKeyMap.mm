@@ -7,6 +7,7 @@
 
 #include <Carbon/Carbon.h>
 #include "KeyCodes.h"
+#include <iostream>
 
 namespace Engine {
 Key TranslateKey(unsigned short code) {
@@ -83,7 +84,9 @@ Key TranslateKey(unsigned short code) {
         case kVK_F12: return Engine::Key::F12;
 
             
-        default: return Engine::Key::Unknow;
+        default:
+            std::cout << "Unknown Input" << std::endl;
+            return Engine::Key::Unknow;
     }
 }
 }

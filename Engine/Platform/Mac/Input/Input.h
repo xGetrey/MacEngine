@@ -25,6 +25,7 @@ float GetMouseY();
 float GetMouseDeltaX();
 float GetMouseDeltaY();
 Engine::Vector2 GetMousePos();
+float GetScrollX();
 float GetScrollY();
 
 namespace Internal {
@@ -32,6 +33,7 @@ void Input_BeginFrame();
 void Input_SetKey(Key key, bool down);
 void Input_SetMouseButton(MouseButton button, bool down);
 void Input_SetMousePosition(float x, float y);
+void Input_AddMouseDelta(float dx, float dy);
 void Input_AddScroll(float x, float y);
 void Input_ClearAll();
 

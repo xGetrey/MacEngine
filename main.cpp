@@ -35,6 +35,9 @@ int main() {
     while (!window.ShouldClose()) {
         window.PollEvents();
         //std::cout << Engine::GetWidth() << " " << Engine::GetHeight() << std::endl;
+        //std::cout << Engine::GetMousePos().x << std::endl;
+        
+        if (Engine::IsMouseButtonPressed(Engine::MouseButton::Left)) std::cout << "Left" << std::endl;
         
         if (Engine::IsKeyPressed(Engine::Key::A)) std::cout << "A" << std::endl;
         if (Engine::IsKeyPressed(Engine::Key::B)) std::cout << "B" << std::endl;

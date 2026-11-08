@@ -51,6 +51,7 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     NSString* nsTitle = [NSString stringWithUTF8String:title.c_str()];
     [window setTitle:nsTitle];
     [window center];
+    [window setAcceptsMouseMovedEvents:YES];
     
     EngineWindowDelegate* delegate = [[EngineWindowDelegate alloc] init];
     delegate.shouldClosePtr = &m_Impl->shouldClose;
@@ -95,9 +96,43 @@ void Window::PollEvents() {
             Internal::Input_SetKey(TranslateKey(event.keyCode), type == NSEventTypeKeyDown);
             bool cmd = (event.modifierFlags & NSEventModifierFlagCommand) != 0;
             if (!cmd) continue;
-            
+
         }
-        
+        switch (type) {
+            case NSEventTypeLeftMouseDown:  Internal::Input_SetMouseButton(MouseButton::Left, true);   break;
+            case NSEventTypeLeftMouseUp:    Internal::Input_SetMouseButton(MouseButton::Left, false);  break;
+            case NSEventTypeRightMouseDown: Internal::Input_SetMouseButton(MouseButton::Right, true);  break;
+            case NSEventTypeRightMouseUp:   Internal::Input_SetMouseButton(MouseButton::Right, false); break;
+            case NSEventTypeOtherMouseDown:
+                if (event.buttonNumber == 2) Internal::Input_SetMouseButton(MouseButton::Middle, true);
+                break;
+            case NSEventTypeOtherMouseUp:
+                if (event.buttonNumber == 2) Internal::Input_SetMouseButton(MouseButton::Middle, false);
+                break;
+            case NSEventTypeScrollWheel:
+                Internal::Input_AddScroll(event.scrollingDeltaX, event.scrollingDeltaY);
+                break;
+            default: break;
+        }
+
+        switch (type) {
+            case NSEventTypeMouseMoved:
+            case NSEventTypeLeftMouseDragged:
+            case NSEventTypeRightMouseDragged:
+            case NSEventTypeOtherMouseDragged:
+                Internal::Input_AddMouseDelta(event.deltaX, event.deltaY);
+                [[fallthrough]];
+            case NSEventTypeLeftMouseDown:
+            case NSEventTypeRightMouseDown:
+            case NSEventTypeOtherMouseDown:
+                if (event.window == m_Impl->nsWindow) {
+                    NSPoint p = [event locationInWindow];
+                    Internal::Input_SetMousePosition(p.x, GetWindowHeight() - p.y);
+                }
+                break;
+            default: break;
+        }
+
         [NSApp sendEvent:event];
         [NSApp updateWindows];
     }
