@@ -37,6 +37,8 @@ int main() {
         //std::cout << Engine::GetWidth() << " " << Engine::GetHeight() << std::endl;
         //std::cout << Engine::GetMousePos().x << std::endl;
         
+        if (Engine::IsKeyPressed(Engine::Key::Space)) std::cout << Engine::GetDeltaTime();
+        
         if (Engine::IsKeyPressed(Engine::Key::LeftShift))    std::cout << "Bal Shift LE" << std::endl;
         if (Engine::IsKeyReleased(Engine::Key::LeftShift))   std::cout << "Bal Shift FEL" << std::endl;
         if (Engine::IsKeyPressed(Engine::Key::RightShift))   std::cout << "Jobb Shift LE" << std::endl;

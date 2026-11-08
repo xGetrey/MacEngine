@@ -11,6 +11,8 @@
 #include <iostream>
 #include "../../Input/Input.h"
 #include "../../Input/MacKeyMap.h"
+#include "../../../../Core/Time/Time.h"
+#include "../../Display/DisplayMetrics.h"
 
 @interface EngineWindowDelegate : NSObject <NSWindowDelegate>
 @property (nonatomic, assign) bool* shouldClosePtr;
@@ -63,6 +65,9 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     m_Impl->nsWindow = window;
     m_Impl->delegate = delegate;
     
+    Internal::Time_Init();
+    SetTargetFps(Engine::DisplayMetrics.GetDisplayHz());
+    
     Window::Get().SetIcon("Engine/MacEngineIcon.png");
 }
 
@@ -86,6 +91,7 @@ bool Window::ShouldClose() const {
 }
 
 void Window::PollEvents() {
+    Internal::Time_BeginFrame();
     Internal::Input_BeginFrame();
     while (NSEvent* event = [NSApp nextEventMatchingMask:NSEventMaskAny
                                                untilDate:[NSDate distantPast]

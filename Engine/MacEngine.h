@@ -12,6 +12,8 @@
 #include "Platform/Mac/Display/DisplayMetrics.h"
 #include "Platform/Mac/WindowManager/Menubar/MenubarAPI.h"
 #include "Platform/Mac/Input/Input.h"
+#include "Core/Vector2.h"
+#include "Core/Time/Time.h"
 
 
 namespace Engine {
