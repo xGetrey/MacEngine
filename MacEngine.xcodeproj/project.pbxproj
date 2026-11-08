@@ -33,6 +33,7 @@
 				FFCA59443092984C006907D2 /* Exceptions for "Engine" folder in "Compile Sources" phase from "MyTool" target */,
 			);
 			explicitFileTypes = {
+				Core/Rect/Rect.h = sourcecode.cpp.cpp;
 				Core/Time/Time.h = sourcecode.cpp.cpp;
 				Core/Vector2.h = sourcecode.cpp.cpp;
 				MacEngine.h = sourcecode.cpp.cpp;
