@@ -41,7 +41,8 @@ int main() {
         
         
         
-        Engine::DrawRect(rect, Engine::Color(120, 32, 0));
+        //Engine::DrawRect(rect, Engine::Color(120, 32, 0));
+        Engine::DrawRectLines(rect, Engine::Color(255, 32, 0), 20);
         
         if (Engine::IsKeyDown(Engine::Key::D)) {
             rect.pos.x += 100.0f * Engine::GetDeltaTime();

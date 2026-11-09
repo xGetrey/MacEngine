@@ -13,7 +13,9 @@ namespace Engine {
 
 void SetClearColor(const Color& color);
 void Present();
+
 void DrawRect(const Rect& rect, const Color& color);
+void DrawRectLines(const Rect& rect, const Color& color, int thickness = 1);
 
 namespace Internal {
 bool Renderer_Init(void* nativeWindow);
