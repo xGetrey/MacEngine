@@ -13,6 +13,7 @@
 #include "../../Input/MacKeyMap.h"
 #include "../../../../Core/Time/Time.h"
 #include "../../Display/DisplayMetrics.h"
+#include "../../../../Renderer/Renderer.h"
 
 @interface EngineWindowDelegate : NSObject <NSWindowDelegate>
 @property (nonatomic, assign) bool* shouldClosePtr;
@@ -63,6 +64,7 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     [NSApp activateIgnoringOtherApps:YES];
     
     m_Impl->nsWindow = window;
+    Internal::Renderer_Init((__bridge void*)window);
     m_Impl->delegate = delegate;
     
     Internal::Time_Init();
@@ -154,6 +156,7 @@ void Window::SetBackgroundColor(const Color& color) {
         NSColor* nsColor = [NSColor colorWithRed:color.red green:color.green blue:color.blue alpha:color.alpha];
         [m_Impl->nsWindow setBackgroundColor:nsColor];
     }
+    SetClearColor(color);
 }
 
 bool Window::IsResizable() const {

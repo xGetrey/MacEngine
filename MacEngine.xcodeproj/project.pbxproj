@@ -8,29 +8,46 @@
 
 /* Begin PBXBuildFile section */
 		FF4DEEAD308E618E00867503 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF4DEEAC308E618800867503 /* main.cpp */; };
+		FFCA5A0530A22FF7006907D2 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCA5A0430A22FF7006907D2 /* Metal.framework */; platformFilters = (ios, macos, tvos, xros, ); };
+		FFCA5A0730A2300D006907D2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCA5A0630A2300D006907D2 /* QuartzCore.framework */; platformFilters = (ios, macos, tvos, watchos, xros, ); };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		000000000000000000000120 /* MyTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MyTool; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF4DEEAC308E618800867503 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		FF4DEEB2308E637800867503 /* CMakeList.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeList.txt; sourceTree = "<group>"; };
+		FFCA5A0430A22FF7006907D2 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
+		FFCA5A0630A2300D006907D2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		FFCA59443092984C006907D2 /* Exceptions for "Engine" folder in "Compile Sources" phase from "MyTool" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 000000000000000120000000 /* Sources */;
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FFCA5A0830A2310A006907D2 /* Exceptions for "Engine" folder in "MyTool" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Platform/Mac/Input/Input.h,
+				Core/Rect/Rect.h,
+				Core/Time/Time.h,
+				Core/Vector2.h,
+				MacEngine.h,
+				Platform/Mac/Color.h,
+				Platform/Mac/Display/DisplayMetrics.h,
+				Platform/Mac/Input/KeyCodes.h,
+				Platform/Mac/Input/MacKeyMap.h,
+				Platform/Mac/WindowManager/Menubar/Item/MenuItemData.h,
+				Platform/Mac/WindowManager/Menubar/Menu/Menubar.h,
+				Platform/Mac/WindowManager/Menubar/MenubarAPI.h,
+				Platform/Mac/WindowManager/Menubar/Section/MenuData.h,
+				Platform/Mac/WindowManager/Window/Window.h,
+				Renderer/Renderer.h,
 			);
+			target = 000000000000000100000000 /* MyTool */;
 		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		000000000000000000000010 /* Engine */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				FFCA59443092984C006907D2 /* Exceptions for "Engine" folder in "Compile Sources" phase from "MyTool" target */,
+				FFCA5A0830A2310A006907D2 /* Exceptions for "Engine" folder in "MyTool" target */,
 			);
 			explicitFileTypes = {
 				Core/Rect/Rect.h = sourcecode.cpp.cpp;
@@ -48,6 +65,7 @@
 				Platform/Mac/WindowManager/Menubar/MenubarAPI.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Menubar/Section/MenuData.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Window/Window.h = sourcecode.cpp.cpp;
+				Renderer/Renderer.h = sourcecode.cpp.cpp;
 			};
 			path = Engine;
 			sourceTree = "<group>";
@@ -58,6 +76,8 @@
 		000000000000000130000000 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				FFCA5A0730A2300D006907D2 /* QuartzCore.framework in Frameworks */,
+				FFCA5A0530A22FF7006907D2 /* Metal.framework in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -69,6 +89,7 @@
 				FF4DEEB2308E637800867503 /* CMakeList.txt */,
 				FF4DEEAC308E618800867503 /* main.cpp */,
 				000000000000000000000010 /* Engine */,
+				FFCA5A0330A22FF6006907D2 /* Frameworks */,
 				000000000000000000000020 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,6 +100,15 @@
 				000000000000000000000120 /* MyTool */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FFCA5A0330A22FF6006907D2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FFCA5A0630A2300D006907D2 /* QuartzCore.framework */,
+				FFCA5A0430A22FF7006907D2 /* Metal.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

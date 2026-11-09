@@ -14,4 +14,8 @@ dependencies: \
   /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Menubar/Menu/../Section/MenuData.h \
   /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/Input/Input.h \
   /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/Input/KeyCodes.h \
-  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/Input/../../../Core/Vector2.h
+  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/Input/../../../Core/Vector2.h \
+  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Core/Vector2.h \
+  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Core/Time/Time.h \
+  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Renderer/Renderer.h \
+  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Renderer/../Platform/Mac/Color.h

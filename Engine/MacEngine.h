@@ -14,6 +14,7 @@
 #include "Platform/Mac/Input/Input.h"
 #include "Core/Vector2.h"
 #include "Core/Time/Time.h"
+#include "Renderer/Renderer.h"
 
 
 namespace Engine {

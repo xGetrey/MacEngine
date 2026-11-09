@@ -115,6 +115,7 @@ int main() {
         if (Engine::IsKeyPressed(Engine::Key::RightCommand)) std::cout << "RightCommand" << std::endl;
         
         if (Engine::IsKeyReleased(Engine::Key::K)) std::cout << "K elengedve" << std::endl;
+        Engine::Present();
     }
     
     return 0;

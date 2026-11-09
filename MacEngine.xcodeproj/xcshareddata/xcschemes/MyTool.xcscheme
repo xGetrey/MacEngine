@@ -17,6 +17,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "000000000000000100000000"
                BuildableName = "MyTool"
+               BlueprintName = "MyTool"
                ReferencedContainer = "container:MacEngine.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -48,6 +49,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "000000000000000100000000"
             BuildableName = "MyTool"
+            BlueprintName = "MyTool"
             ReferencedContainer = "container:MacEngine.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -64,6 +66,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "000000000000000100000000"
             BuildableName = "MyTool"
+            BlueprintName = "MyTool"
             ReferencedContainer = "container:MacEngine.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
