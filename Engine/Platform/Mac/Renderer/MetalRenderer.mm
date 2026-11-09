@@ -197,4 +197,31 @@ void DrawRectLines(const Rect& rect, const Color& color, const int thickness) {
     DrawRect(Rect(x, y + t, t, h  - 2 * t), color);
     DrawRect(Rect(x + w - t, y + t, t, h - 2 * t), color);
 }
+
+void DrawCircle(Vector2 center, float radius, const Color& color) {
+    if (radius == 0) return;
+    
+    int segments = 8;
+    if (radius > 0.25f) {
+        segments = (int)std::ceil(M_PI / std::acos(1.0f - 0.25f / radius));
+    }
+    if (segments < 8) segments = 8;
+    
+    simd_float4 c = {color.red, color.green, color.blue, color.alpha};
+    simd_float2 mid = {center.x, center.y};
+    float step = 2.0f * M_PI / segments;
+    
+    for (int i = 0; i < segments; i++) {
+        float a0 = i * step;
+        float a1 = (i + 1) * step;
+        
+        simd_float2 p0 = {center.x + std::cos(a0) * radius, center.y + std::sin(a0) * radius};
+        simd_float2 p1 = {center.x + std::cos(a1) * radius, center.y + std::sin(a1) * radius};
+        
+        s_Vertices.push_back({mid, c});
+        s_Vertices.push_back({p0, c});
+        s_Vertices.push_back({p1, c});
+    }
+}
+
 }

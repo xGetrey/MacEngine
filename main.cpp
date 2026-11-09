@@ -33,6 +33,7 @@ int main() {
     std::cout << Engine::DisplayMetrics.isHDRSupported();
     
     Engine::Rect rect = Engine::Rect(Engine::Vector2(30.0f, 30.0f), 120.0f, 100.0f);
+    //Engine::SetTargetFps(15);
     
     while (!window.ShouldClose()) {
         window.PollEvents();
@@ -43,6 +44,7 @@ int main() {
         
         //Engine::DrawRect(rect, Engine::Color(120, 32, 0));
         Engine::DrawRectLines(rect, Engine::Color(255, 32, 0), 20);
+        Engine::DrawCircle(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), 5.0f, Engine::Color(255, 255, 0));
         
         if (Engine::IsKeyDown(Engine::Key::D)) {
             rect.pos.x += 100.0f * Engine::GetDeltaTime();
