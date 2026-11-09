@@ -16,7 +16,6 @@
 #include "Core/Time/Time.h"
 #include "Renderer/Renderer.h"
 
-
 namespace Engine {
 using MenubarApi::BuildMenubar;
 using MenubarApi::menuSection;

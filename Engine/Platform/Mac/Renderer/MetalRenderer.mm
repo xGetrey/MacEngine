@@ -10,12 +10,58 @@
 #import <QuartzCore/QuartzCore.h>
 #import "../../../Renderer/Renderer.h"
 
+#include <simd/simd.h>
+#include <vector>
+#include "../../../Core/Rect/Rect.h"
+
 namespace {
 id<MTLDevice> s_Device = nil;
 id<MTLCommandQueue> s_Queue = nil;
 CAMetalLayer* s_Layer = nil;
 NSView* ns_View = nil;
 MTLClearColor s_ClearColor = MTLClearColorMake(0, 0, 0, 1);
+
+struct Vertex {
+    simd_float2 position;
+    simd_float4 color;
+};
+
+std::vector<Vertex> s_Vertices;
+id<MTLRenderPipelineState> s_Pipeline = nil;
+
+const char* kShaderSource = R"(
+#include <metal_stdlib>
+using namespace metal;
+
+struct Vertex {
+    float2 position;
+    float4 color;
+};
+
+struct VSOut {
+    float4 position [[position]];
+    float4 color;
+};
+
+vertex VSOut vs_main(uint vid [[vertex_id]],
+                     const device Vertex* vertices [[buffer(0)]],
+                     constant float2& viewport   [[buffer(1)]]) {
+    Vertex v = vertices[vid];
+
+    // pixel (bal felső 0,0) → Metal (-1..1, Y felfelé)
+    float2 ndc = float2(v.position.x / viewport.x * 2.0 - 1.0,
+                        1.0 - v.position.y / viewport.y * 2.0);
+
+    VSOut out;
+    out.position = float4(ndc, 0.0, 1.0);
+    out.color = v.color;
+    return out;
+}
+
+fragment float4 fs_main(VSOut in [[stage_in]]) {
+    return in.color;
+}
+)";
 }
 
 namespace Engine {
@@ -36,6 +82,32 @@ bool Renderer_Init(void* nativeWindow) {
     ns_View.layer = s_Layer;
     
     s_Queue = [s_Device newCommandQueue];
+    
+    NSError* error = nil;
+    id<MTLLibrary> library = [s_Device newLibraryWithSource:@(kShaderSource) options:nil error:&error];
+    if (!library) {
+        NSLog(@"Shader hiba: %@", error);   // ha elírás van a shaderben, itt látod
+        return false;
+    }
+
+    MTLRenderPipelineDescriptor* desc = [[MTLRenderPipelineDescriptor alloc] init];
+    desc.vertexFunction = [library newFunctionWithName:@"vs_main"];
+    desc.fragmentFunction = [library newFunctionWithName:@"fs_main"];
+    desc.colorAttachments[0].pixelFormat = s_Layer.pixelFormat;
+
+    // Átlátszóság (alpha blending), hogy a Color alpha értéke is számítson
+    desc.colorAttachments[0].blendingEnabled = YES;
+    desc.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactorSourceAlpha;
+    desc.colorAttachments[0].destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
+    desc.colorAttachments[0].sourceAlphaBlendFactor = MTLBlendFactorOne;
+    desc.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
+
+    s_Pipeline = [s_Device newRenderPipelineStateWithDescriptor:desc error:&error];
+    if (!s_Pipeline) {
+        NSLog(@"Pipeline hiba: %@", error);
+        return false;
+    }
+    
     return true;
 }
 }
@@ -62,12 +134,47 @@ void Present() {
 
         id<MTLCommandBuffer> cmd = [s_Queue commandBuffer];
         id<MTLRenderCommandEncoder> enc = [cmd renderCommandEncoderWithDescriptor:pass];
-        // ← ide jönnek majd a rajzolási parancsok (négyzet)
+        
+        if (!s_Vertices.empty()) {
+            [enc setRenderPipelineState:s_Pipeline];
+
+            id<MTLBuffer> vb = [s_Device newBufferWithBytes:s_Vertices.data()
+                                                     length:s_Vertices.size() * sizeof(Vertex)
+                                                    options:MTLResourceStorageModeShared];
+            [enc setVertexBuffer:vb offset:0 atIndex:0];        // → [[buffer(0)]]
+
+            simd_float2 viewport = { (float)size.width, (float)size.height };
+            [enc setVertexBytes:&viewport length:sizeof(viewport) atIndex:1];   // → [[buffer(1)]]
+
+            [enc drawPrimitives:MTLPrimitiveTypeTriangle
+                    vertexStart:0
+                    vertexCount:s_Vertices.size()];
+        }
+        
+        s_Vertices.clear();
+        
         [enc endEncoding];
 
         [cmd presentDrawable:drawable];
         [cmd commit];
     }
+}
+
+void DrawRect(const Rect& rect, const Color& color) {
+    simd_float4 c = { color.red, color.green, color.blue, color.alpha };
+    
+    simd_float2 tl = { rect.Left(), rect.Top() };
+    simd_float2 tr = { rect.Right(), rect.Top() };
+    simd_float2 bl = { rect.Left(), rect.Bottom() };
+    simd_float2 br = { rect.Right(), rect.Bottom() };
+    
+    s_Vertices.push_back({tl, c});
+    s_Vertices.push_back({tr, c});
+    s_Vertices.push_back({bl, c});
+    
+    s_Vertices.push_back({tr, c});
+    s_Vertices.push_back({br, c});
+    s_Vertices.push_back({bl, c});
 }
 
 }

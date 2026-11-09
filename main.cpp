@@ -32,10 +32,29 @@ int main() {
     std::cout << Engine::DisplayMetrics.GetDisplayHz() << std::endl;
     std::cout << Engine::DisplayMetrics.isHDRSupported();
     
+    Engine::Rect rect = Engine::Rect(Engine::Vector2(30.0f, 30.0f), 120.0f, 100.0f);
+    
     while (!window.ShouldClose()) {
         window.PollEvents();
         //std::cout << Engine::GetWidth() << " " << Engine::GetHeight() << std::endl;
         //std::cout << Engine::GetMousePos().x << std::endl;
+        
+        
+        
+        Engine::DrawRect(rect, Engine::Color(120, 32, 0));
+        
+        if (Engine::IsKeyDown(Engine::Key::D)) {
+            rect.pos.x += 100.0f * Engine::GetDeltaTime();
+        }
+        if (Engine::IsKeyDown(Engine::Key::A)) {
+            rect.pos.x -= 100.0f * Engine::GetDeltaTime();
+        }
+        if (Engine::IsKeyDown(Engine::Key::W)) {
+            rect.pos.y -= 100.0f * Engine::GetDeltaTime();
+        }
+        if (Engine::IsKeyDown(Engine::Key::S)) {
+            rect.pos.y += 100.0f * Engine::GetDeltaTime();
+        }
         
         if (Engine::IsKeyPressed(Engine::Key::Space)) std::cout << Engine::GetDeltaTime();
         
