@@ -45,6 +45,7 @@ int main() {
         //Engine::DrawRect(rect, Engine::Color(120, 32, 0));
         Engine::DrawRectLines(rect, Engine::Color(255, 32, 0), 20);
         Engine::DrawCircle(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), 5.0f, Engine::Color(255, 255, 0));
+        Engine::DrawLine(Engine::Vector2(32.0f, 43.0f), Engine::GetMousePos(), Engine::Color(0, 0, 0, 255), 20);
         
         if (Engine::IsKeyDown(Engine::Key::D)) {
             rect.pos.x += 100.0f * Engine::GetDeltaTime();
@@ -59,8 +60,8 @@ int main() {
             rect.pos.y += 100.0f * Engine::GetDeltaTime();
         }
         
+        /*
         if (Engine::IsKeyPressed(Engine::Key::Space)) std::cout << Engine::GetDeltaTime();
-        
         if (Engine::IsKeyPressed(Engine::Key::LeftShift))    std::cout << "Bal Shift LE" << std::endl;
         if (Engine::IsKeyReleased(Engine::Key::LeftShift))   std::cout << "Bal Shift FEL" << std::endl;
         if (Engine::IsKeyPressed(Engine::Key::RightShift))   std::cout << "Jobb Shift LE" << std::endl;
@@ -137,6 +138,7 @@ int main() {
         if (Engine::IsKeyPressed(Engine::Key::RightCommand)) std::cout << "RightCommand" << std::endl;
         
         if (Engine::IsKeyReleased(Engine::Key::K)) std::cout << "K elengedve" << std::endl;
+        */
         Engine::Present();
     }
     

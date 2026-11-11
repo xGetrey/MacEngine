@@ -86,7 +86,7 @@ bool Renderer_Init(void* nativeWindow) {
     NSError* error = nil;
     id<MTLLibrary> library = [s_Device newLibraryWithSource:@(kShaderSource) options:nil error:&error];
     if (!library) {
-        NSLog(@"Shader hiba: %@", error);   // ha elírás van a shaderben, itt látod
+        NSLog(@"Shader hiba: %@", error);
         return false;
     }
     
@@ -95,7 +95,6 @@ bool Renderer_Init(void* nativeWindow) {
     desc.fragmentFunction = [library newFunctionWithName:@"fs_main"];
     desc.colorAttachments[0].pixelFormat = s_Layer.pixelFormat;
     
-    // Átlátszóság (alpha blending), hogy a Color alpha értéke is számítson
     desc.colorAttachments[0].blendingEnabled = YES;
     desc.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactorSourceAlpha;
     desc.colorAttachments[0].destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
@@ -118,7 +117,6 @@ void SetClearColor(const Color& color) {
 
 void Present() {
     @autoreleasepool {
-        // A vászon mérete kövesse az ablakot (átméretezés, Retina)
         CGSize size = ns_View.bounds.size;
         CGFloat scale = s_Layer.contentsScale;
         s_Layer.drawableSize = CGSizeMake(size.width * scale, size.height * scale);
@@ -222,6 +220,32 @@ void DrawCircle(Vector2 center, float radius, const Color& color) {
         s_Vertices.push_back({p0, c});
         s_Vertices.push_back({p1, c});
     }
+}
+
+void DrawLine(const Vector2 from, const Vector2 to, const Color& color, const int thickness) {
+    float dx = to.x - from.x;
+    float dy = to.y - from.y;
+    float length = std::sqrt(dx * dx + dy * dy);
+    if (length <= 0.0f || thickness <= 0) return;
+    
+    float half = static_cast<float>(thickness) / 2.0f;
+    float nx = -dy / length * half;
+    float ny = dx / length * half;
+        
+    simd_float4 c = {color.red, color.green, color.blue, color.alpha};
+    
+    simd_float2 a = {from.x + nx, from.y + ny};
+    simd_float2 b = {to.x + nx, to.y + ny};
+    simd_float2 d = {from.x - nx, from.y - ny};
+    simd_float2 e = {to.x - nx, to.y - ny};
+    
+    s_Vertices.push_back({a, c});
+    s_Vertices.push_back({b, c});
+    s_Vertices.push_back({d, c});
+    
+    s_Vertices.push_back({b, c});
+    s_Vertices.push_back({e, c});
+    s_Vertices.push_back({d, c});
 }
 
 }
