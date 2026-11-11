@@ -20,6 +20,7 @@ void DrawRectLines(const Rect& rect, const Color& color, int thickness = 1);
 void DrawCircle(Vector2 center, float radius, const Color& color);
 
 void DrawLine(const Vector2 from, const Vector2 to, const Color& color, const int thickness = 1);
+void DrawRoundedLine(const Vector2 from, const Vector2 to, const Color& color, const int thickness = 1);
 
 namespace Internal {
 bool Renderer_Init(void* nativeWindow);

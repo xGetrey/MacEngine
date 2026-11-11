@@ -248,4 +248,10 @@ void DrawLine(const Vector2 from, const Vector2 to, const Color& color, const in
     s_Vertices.push_back({d, c});
 }
 
+void DrawRoundedLine(const Vector2 from, const Vector2 to, const Color& color, const int thickness) {
+    DrawCircle(from, thickness/2, color);
+    DrawCircle(to, thickness/2, color);
+    DrawLine(from, to, color, thickness);
+}
+
 }
