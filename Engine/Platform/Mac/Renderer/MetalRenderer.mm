@@ -13,6 +13,8 @@
 #include <simd/simd.h>
 #include <vector>
 #include "../../../Core/Rect/Rect.h"
+#include "../Input/Input.h"
+#include <iostream>
 
 namespace {
 id<MTLDevice> s_Device = nil;
@@ -277,9 +279,35 @@ void DrawLine(const Vector2 from, const Vector2 to, const Color& color, const in
 }
 
 void DrawRoundedLine(const Vector2 from, const Vector2 to, const Color& color, const int thickness) {
-    DrawCircle(from, thickness/2, color);
-    DrawCircle(to, thickness/2, color);
-    DrawLine(from, to, color, thickness);
+    if (thickness <= 0) return;
+
+    float dx = to.x - from.x;
+    float dy = to.y - from.y;
+    float length = std::sqrt(dx * dx + dy * dy);
+    float r = thickness / 2.0f;   // float osztás, hogy páratlan vastagságnál se vesszen el a fél
+
+    // Ha a vonal rövidebb a vastagságánál, a két kerek vég összeér: ez egy kör
+    if (length <= thickness) {
+        DrawCircle(Vector2((from.x + to.x) / 2, (from.y + to.y) / 2), r, color);
+        return;
+    }
+
+    // Egységnyi irányvektor
+    float ux = dx / length;
+    float uy = dy / length;
+
+    // A vonal végeit r-rel befelé húzzuk, hogy a félkörökkel együtt pontosan from-tól to-ig érjen
+    Vector2 start(from.x + ux * r, from.y + uy * r);
+    Vector2 end(to.x - ux * r, to.y - uy * r);
+
+    DrawLine(start, end, color, thickness);
+
+    // A DrawSemicircle fokot vár, az atan2 radiánt ad
+    float angleDeg = std::atan2(dy, dx) * 180.0f / M_PI;
+
+    // A félkör domború oldala a rotate + 90° irányba néz
+    DrawSemicircle(start, r, angleDeg + 90.0f, color);   // hátra néz (a vonal iránya + 180°)
+    DrawSemicircle(end,   r, angleDeg - 90.0f, color);   // előre néz (a vonal iránya)
 }
 
 }
