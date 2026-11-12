@@ -233,7 +233,7 @@ void DrawSemicircle(const Vector2 center, const float radius, const float rotate
     simd_float4 c = {color.red, color.green, color.blue, color.alpha};
     simd_float2 mid = {center.x, center.y};
     
-    float start = rotate;
+    float start = rotate * M_PI / 180.0f;
     float step = M_PI / segments;
     
     for (int i = 0; i < segments; i++) {
