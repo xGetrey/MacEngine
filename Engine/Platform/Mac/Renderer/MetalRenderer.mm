@@ -196,7 +196,7 @@ void DrawRectLines(const Rect& rect, const Color& color, const int thickness) {
     DrawRect(Rect(x + w - t, y + t, t, h - 2 * t), color);
 }
 
-void DrawCircle(Vector2 center, float radius, const Color& color) {
+void DrawCircle(const Vector2 center, const float radius, const Color& color) {
     if (radius == 0) return;
     
     int segments = 8;
@@ -220,6 +220,34 @@ void DrawCircle(Vector2 center, float radius, const Color& color) {
         s_Vertices.push_back({p0, c});
         s_Vertices.push_back({p1, c});
     }
+}
+
+void DrawSemicircle(const Vector2 center, const float radius, const float rotate, const Color& color) {
+    if (radius <= 0) return;
+    
+    int segments = 8;
+    if (radius > 0.25f) {
+        segments = (int)std::ceil(M_PI / std::acos(1.0f - 0.25f / radius));
+    }
+    segments = (segments + 1) / 2;
+    simd_float4 c = {color.red, color.green, color.blue, color.alpha};
+    simd_float2 mid = {center.x, center.y};
+    
+    float start = rotate;
+    float step = M_PI / segments;
+    
+    for (int i = 0; i < segments; i++) {
+        float a0 = start + i * step;
+        float a1 = start + (i + 1) * step;
+        
+        simd_float2 p0 = {center.x + std::cos(a0) * radius, center.y + std::sin(a0) * radius};
+        simd_float2 p1 = {center.x + std::cos(a1) * radius, center.y + std::sin(a1) * radius};
+        
+        s_Vertices.push_back({mid, c});
+        s_Vertices.push_back({p0, c});
+        s_Vertices.push_back({p1, c});
+    }
+    
 }
 
 void DrawLine(const Vector2 from, const Vector2 to, const Color& color, const int thickness) {

@@ -44,8 +44,10 @@ int main() {
         
         //Engine::DrawRect(rect, Engine::Color(120, 32, 0));
         Engine::DrawRectLines(rect, Engine::Color(255, 32, 0), 20);
-        Engine::DrawCircle(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), 5.0f, Engine::Color(255, 255, 0));
-        Engine::DrawRoundedLine(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), Engine::GetMousePos(), Engine::Color(0, 0, 0, 255), 20);
+        Engine::DrawCircle(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), 40.0f, Engine::Color(255, 255, 0));
+        //Engine::DrawRoundedLine(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), Engine::GetMousePos(), Engine::Color(0, 0, 0, 100), 20);
+        
+        Engine::DrawSemicircle({400, 400}, 40.0f, 40.0f, {255, 255, 255, 255});
         
         if (Engine::IsKeyDown(Engine::Key::D)) {
             rect.pos.x += 100.0f * Engine::GetDeltaTime();
