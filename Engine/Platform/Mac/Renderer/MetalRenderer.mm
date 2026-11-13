@@ -310,4 +310,29 @@ void DrawRoundedLine(const Vector2 from, const Vector2 to, const Color& color, c
     DrawSemicircle(end,   r, angleDeg - 90.0f, color);   // előre néz (a vonal iránya)
 }
 
+void DrawPolygon(const Vector2 center, float size, const int vertices, const Color& color) {
+    if (vertices < 3) return;
+    if (size < 1.0f) return;
+    
+    simd_float4 c = {color.red, color.green, color.blue, color.alpha};
+    simd_float2 mid = {center.x, center.y};
+    
+    float angle = (vertices == 4) ? 45.0f : -90.0f;
+    
+    float step = 2.0f * M_PI / vertices;
+    float start = angle * M_PI / 180.0f;
+    
+    for (int i = 0; i < vertices; i++) {
+        float a0 = start + i * step;
+        float a1 = start + (i + 1) * step;
+        
+        simd_float2 p0 = {center.x + std::cos(a0) * size, center.y + std::sin(a0) * size};
+        simd_float2 p1 = {center.x + std::cos(a1) * size, center.y + std::sin(a1) * size};
+        
+        s_Vertices.push_back({mid, c});
+        s_Vertices.push_back({p0, c});
+        s_Vertices.push_back({p1, c});
+    }
+}
+
 }
