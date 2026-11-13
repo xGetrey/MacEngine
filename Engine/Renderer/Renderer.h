@@ -14,6 +14,11 @@ namespace Engine {
 void SetClearColor(const Color& color);
 void Present();
 
+// Élsimítás (MSAA) mintaszáma: 1 = kikapcsolva, 2, 4 (alapértelmezett) vagy 8.
+// Bármikor hívható; ha a GPU nem támogatja, a legközelebbi kisebb támogatott értéket használja.
+void SetAntialiasing(int samples);
+int GetAntialiasing();   // a ténylegesen használt mintaszám
+
 void DrawRect(const Rect& rect, const Color& color);
 void DrawRectLines(const Rect& rect, const Color& color, int thickness = 1);
 

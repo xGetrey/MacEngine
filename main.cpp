@@ -25,6 +25,7 @@ int main() {
         .Item(Engine::menuItem("Teszt").onClick(teszt).shortcut("g"))
         .registerMenu();
     Engine::BuildMenubar();
+    Engine::SetAntialiasing(8);
     
     std::cout << std::boolalpha;
 
@@ -63,6 +64,11 @@ int main() {
         if (Engine::IsKeyDown(Engine::Key::S)) {
             rect.pos.y += 100.0f * Engine::GetDeltaTime();
         }
+        
+        if (Engine::IsKeyPressed(Engine::Key::Num1)) Engine::SetAntialiasing(1);
+        if (Engine::IsKeyPressed(Engine::Key::Num4)) Engine::SetAntialiasing(4);
+        if (Engine::IsKeyPressed(Engine::Key::Num8)) Engine::SetAntialiasing(8);
+        if (Engine::IsKeyPressed(Engine::Key::Space)) std::cout << "AA: " << Engine::GetAntialiasing() << std::endl;
         
         /*
         if (Engine::IsKeyPressed(Engine::Key::Space)) std::cout << Engine::GetDeltaTime();
