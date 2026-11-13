@@ -1,5 +1,5 @@
 dependencies: \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk/SDKSettings.json \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk/SDKSettings.json \
   /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/Window.mm \
   /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/Window.h \
   /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/../../Color.h \
@@ -10,4 +10,6 @@ dependencies: \
   /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/../../../../Core/Time/Time.h \
   /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/../../Display/DisplayMetrics.h \
   /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/../../../../Renderer/Renderer.h \
-  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/../../../../Renderer/../Platform/Mac/Color.h
+  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/../../../../Renderer/../Platform/Mac/Color.h \
+  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/../../../../Renderer/../Core/Rect/Rect.h \
+  /Users/gulyaspeteristvan/Documents/MacEngine/Engine/Platform/Mac/WindowManager/Window/../../../../Renderer/../Core/Rect/../Vector2.h

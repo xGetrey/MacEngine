@@ -27,8 +27,7 @@
         "table" : {
           "ACTION" : "build",
           "ENABLE_PREVIEWS" : "NO",
-          "ENABLE_XOJIT_PREVIEWS" : "NO",
-          "TOOLCHAINS" : "com.apple.dt.toolchain.Metal.32023.921.5 $(inherited)"
+          "ENABLE_XOJIT_PREVIEWS" : "NO"
         }
       }
     }
