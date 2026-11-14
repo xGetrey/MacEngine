@@ -11,6 +11,7 @@
 #include <vector>
 #include "../Core/Vector2.h"
 #include "../Platform/Mac/Color.h"
+#include <cstdint>
 
 namespace Engine::Internal {
 
@@ -18,14 +19,22 @@ namespace Engine::Internal {
 struct Vertex {
     Vector2 position;
     Color color;
+    Vector2 uv;
 };
-static_assert(sizeof(Vertex) == 24, "A Vertex mérete egyezzen a shaderével (6 float, rés nélkül)");
+static_assert(sizeof(Vertex) == 32, "...8 float, rés nélkül");
+
+struct DrawCommand {
+    uint32_t texture;
+    size_t firstVertex;
+    size_t vertexCount;
+};
 
 // count darab csúcsnak foglal helyet, és az első új csúcsra mutató pointert adja vissza.
 // A pointer csak a következő Batch_Allocate hívásig érvényes (a vector átköltözhet).
-Vertex* Batch_Allocate(size_t count);
+Vertex* Batch_Allocate(size_t count, uint32_t texture = 0);
 
 const std::vector<Vertex>& Batch_GetVertices();
+const std::vector<DrawCommand>& Batch_GetCommands();
 void Batch_Clear();
 
 }

@@ -8,11 +8,15 @@
 #import <Cocoa/Cocoa.h>
 #import <Metal/Metal.h>
 #import <QuartzCore/QuartzCore.h>
+#import <ImageIO/ImageIO.h>
 #import "../../../Renderer/Renderer.h"
 
 #include <simd/simd.h>
 #include "../../../Renderer/RenderBatch.h"
 #include "MetalShaders.h"
+#include <vector>
+#include "../../../Renderer/Texture.h"
+#include <iostream>
 
 namespace {
 id<MTLDevice> s_Device = nil;
@@ -27,6 +31,9 @@ id<MTLLibrary> s_Library = nil;   // a lefordított shader, a pipeline újraép�
 id<MTLTexture> s_MSAATexture = nil;
 NSUInteger s_SampleCount = 1;            // amivel a pipeline jelenleg készült
 NSUInteger s_RequestedSampleCount = 4;   // amit a fejlesztő kért (SetAntialiasing)
+
+id<MTLTexture> s_WhiteTexture = nil;
+std::vector<id<MTLTexture>> s_Textures;
 
 // A kért mintaszámhoz a legnagyobb, a GPU által támogatott értéket adja (8, 4, 2 vagy 1)
 NSUInteger ResolveSampleCount(NSUInteger requested) {
@@ -46,7 +53,7 @@ bool BuildPipeline(NSUInteger sampleCount) {
     desc.rasterSampleCount = sampleCount;   // egyezzen az MSAA textúráéval
 
     desc.colorAttachments[0].blendingEnabled = YES;
-    desc.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactorSourceAlpha;
+    desc.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactorOne; /// Premultiplied alfa: a shader már szorozva adja az RGB-t
     desc.colorAttachments[0].destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
     desc.colorAttachments[0].sourceAlphaBlendFactor = MTLBlendFactorOne;
     desc.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
@@ -113,6 +120,15 @@ bool Renderer_Init(void* nativeWindow) {
         NSLog(@"Shader hiba: %@", error);
         return false;
     }
+    
+    MTLTextureDescriptor* whiteDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:1 height:1 mipmapped:NO];
+    whiteDesc.usage = MTLTextureUsageShaderRead;
+    s_WhiteTexture = [s_Device newTextureWithDescriptor:whiteDesc];
+    
+    const uint8_t white[4] = { 255, 255, 255, 255 };
+    [s_WhiteTexture replaceRegion:MTLRegionMake2D(0, 0, 1, 1) mipmapLevel:0 withBytes:white bytesPerRow:4];
+    
+    s_Textures.push_back(s_WhiteTexture);
 
     return BuildPipeline(ResolveSampleCount(s_RequestedSampleCount));
 }
@@ -184,10 +200,15 @@ void Present() {
 
             simd_float2 viewport = { (float)size.width, (float)size.height };
             [enc setVertexBytes:&viewport length:sizeof(viewport) atIndex:1];   // → [[buffer(1)]]
-
-            [enc drawPrimitives:MTLPrimitiveTypeTriangle
-                    vertexStart:0
-                    vertexCount:vertices.size()];
+            for (const auto& command : Internal::Batch_GetCommands()) {
+                id<MTLTexture> texture = s_WhiteTexture;
+                if (command.texture < s_Textures.size() && s_Textures[command.texture]) {
+                    texture = s_Textures[command.texture];
+                }
+                
+                [enc setFragmentTexture:texture atIndex:0];
+                [enc drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:command.firstVertex vertexCount:command.vertexCount];
+            }
         }
 
         Internal::Batch_Clear();
@@ -197,6 +218,70 @@ void Present() {
         [cmd presentDrawable:drawable];
         [cmd commit];
     }
+}
+
+Texture LoadTexture(const char* path) {
+    Texture result;
+    
+    if (!s_Device) {
+        NSLog(@"LoadTexture: előbb hozd létre a Window-t! (%s)", path);
+        return result;
+    }
+    
+    NSURL* url = [NSURL fileURLWithPath:@(path)];
+    CGImageSourceRef source = CGImageSourceCreateWithURL((__bridge CFURLRef)url, nullptr);
+    
+    if (!source) {
+        NSLog(@"LoadTexture: nem található fájl: %s", path);
+        return result;
+    }
+    
+    CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, nullptr);
+    CFRelease(source);
+    if(!image) {
+        NSLog(@"LoadTexture: nem sikerült a képet beolvasni: %s", path);
+        return result;
+    }
+    
+    size_t width = CGImageGetWidth(image);
+    size_t height = CGImageGetHeight(image);
+    
+    std::vector<uint8_t> pixels(height * width * 4);
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+    CGBitmapInfo format = (CGBitmapInfo)kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big;
+    CGContextRef canvas = CGBitmapContextCreate(pixels.data(), width, height, 8, width*4, colorSpace, format);
+    CGColorSpaceRelease(colorSpace);
+    
+    if(!canvas) {
+        CGImageRelease(image);
+        NSLog(@"LoadTexture: nem sikerült átalakítani: %s", path);
+        return result;
+    }
+    
+    CGContextDrawImage(canvas, CGRectMake(0, 0, width, height), image);
+    CGContextRelease(canvas);
+    CGImageRelease(image);
+    
+    MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:width height:height mipmapped:NO];
+    desc.usage = MTLTextureUsageShaderRead;
+    id<MTLTexture> texture = [s_Device newTextureWithDescriptor:desc];
+    
+    [texture replaceRegion:MTLRegionMake2D(0, 0, width, height) mipmapLevel:0 withBytes:pixels.data() bytesPerRow:width*4];
+    
+    s_Textures.push_back(texture);
+    result.id = static_cast<uint32_t>(s_Textures.size()-1);
+    result.width = static_cast<int>(width);
+    result.height = static_cast<int>(height);
+    std::cout << "Texture loaded: " << path << std::endl;
+    return result;
+}
+
+void UnloadTexture(Texture& texture) {
+    if (texture.id == 0 || texture.id >= s_Textures.size()) return;
+    
+    s_Textures[texture.id] = nil;
+    texture = Texture{};
 }
 
 }

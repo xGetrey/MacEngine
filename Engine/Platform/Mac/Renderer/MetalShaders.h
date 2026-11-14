@@ -18,11 +18,13 @@ using namespace metal;
 struct Vertex {
     packed_float2 position;
     packed_float4 color;
+    packed_float2 uv;
 };
 
 struct VSOut {
     float4 position [[position]];
     float4 color;
+    float2 uv;
 };
 
 vertex VSOut vs_main(uint vid [[vertex_id]],
@@ -37,11 +39,17 @@ vertex VSOut vs_main(uint vid [[vertex_id]],
     VSOut out;
     out.position = float4(ndc, 0.0, 1.0);
     out.color = v.color;
+    out.uv = v.uv;
     return out;
 }
 
-fragment float4 fs_main(VSOut in [[stage_in]]) {
-    return in.color;
+fragment float4 fs_main(VSOut in [[stage_in]],
+                        texture2d<float> tex [[texture(0)]]) {
+    constexpr sampler s(filter::nearest, address::clamp_to_edge);
+
+    // A Color straight alfájú (a fejlesztőnek így kényelmes), a blend premultiplied-et vár
+    float4 tint = float4(in.color.rgb * in.color.a, in.color.a);
+    return tex.sample(s, in.uv) * tint;
 }
 )";
 

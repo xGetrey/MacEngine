@@ -15,6 +15,7 @@
 #include "Core/Vector2.h"
 #include "Core/Time/Time.h"
 #include "Renderer/Renderer.h"
+#include "Renderer/Texture.h"
 
 namespace Engine {
 using MenubarApi::BuildMenubar;

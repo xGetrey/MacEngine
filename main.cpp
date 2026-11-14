@@ -33,6 +33,8 @@ int main() {
     std::cout << Engine::DisplayMetrics.GetDisplayHz() << std::endl;
     std::cout << Engine::DisplayMetrics.isHDRSupported();
     
+    Engine::Texture texture = Engine::LoadTexture("jungel_tree1.png");
+    
     Engine::Rect rect = Engine::Rect(Engine::Vector2(30.0f, 30.0f), 120.0f, 100.0f);
     //Engine::SetTargetFps(15);
     
@@ -44,13 +46,14 @@ int main() {
         
         
         //Engine::DrawRect(rect, Engine::Color(120, 32, 0));
-        Engine::DrawRectLines(rect, Engine::Color(255, 32, 0), 20);
         Engine::DrawCircle(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), 40.0f, Engine::Color(255, 255, 0));
         Engine::DrawRoundedLine(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), Engine::GetMousePos(), Engine::Color(0, 0, 0, 100), 20);
         
         Engine::DrawPolygon({100.0f, 100.0f}, 100.0f, 6, {255, 255, 255, 255});
         
         Engine::DrawSemicircle({400, 400}, 40.0f, -40.0f, {255, 255, 255, 255});
+        Engine::DrawRectLines(rect, Engine::Color(255, 32, 0), 20);
+        Engine::DrawTexture(texture, {300.0f, 300.0f}, {255, 255, 255, 255});
         
         if (Engine::IsKeyDown(Engine::Key::D)) {
             rect.pos.x += 100.0f * Engine::GetDeltaTime();

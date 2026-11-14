@@ -18,6 +18,7 @@
 		FF4DEEB2308E637800867503 /* CMakeList.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeList.txt; sourceTree = "<group>"; };
 		FFCA5A0430A22FF7006907D2 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
 		FFCA5A0630A2300D006907D2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		FFF45D3F30A901890058E26F /* jungel_tree1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jungel_tree1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -66,6 +67,7 @@
 				Platform/Mac/WindowManager/Menubar/Section/MenuData.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Window/Window.h = sourcecode.cpp.cpp;
 				Renderer/Renderer.h = sourcecode.cpp.cpp;
+				Renderer/Texture.h = sourcecode.cpp.cpp;
 			};
 			path = Engine;
 			sourceTree = "<group>";
@@ -86,6 +88,7 @@
 		000000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
+				FFF45D3F30A901890058E26F /* jungel_tree1.png */,
 				FF4DEEB2308E637800867503 /* CMakeList.txt */,
 				FF4DEEAC308E618800867503 /* main.cpp */,
 				000000000000000000000010 /* Engine */,
