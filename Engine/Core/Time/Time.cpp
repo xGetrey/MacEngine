@@ -19,6 +19,11 @@ float s_DeltaTime = 0.0f;
 int s_TargetFPS = 0;
 Clock::time_point s_NextFrame;
 
+// FPS mérés: megszámoljuk a képkockákat egy fél másodperces ablakban
+int s_FPS = 0;
+int s_FrameCount = 0;
+float s_FPSTimer = 0.0f;
+
 }
 
 namespace Engine {
@@ -26,9 +31,17 @@ float GetDeltaTime() {
     return s_DeltaTime;
 }
 
+int GetFPS() {
+    return s_FPS;
+}
+
 void SetTargetFps(int fps) {
     if (fps < 10) {s_TargetFPS = 10;} else {s_TargetFPS = fps;}
     s_NextFrame = Clock::now();
+}
+
+int GetTargetFps() {
+    return s_TargetFPS;
 }
 
 namespace Internal {
@@ -57,6 +70,15 @@ void Time_BeginFrame() {
     auto now = Clock::now();
     s_DeltaTime = std::chrono::duration<float>(now - s_LastFrame).count();
     s_LastFrame = now;
+
+    // Az FPS-hez a valódi időt használjuk, a lenti 0.1-es korlát előtt
+    s_FrameCount++;
+    s_FPSTimer += s_DeltaTime;
+    if (s_FPSTimer >= 0.5f) {
+        s_FPS = static_cast<int>(s_FrameCount / s_FPSTimer + 0.5f);
+        s_FrameCount = 0;
+        s_FPSTimer = 0.0f;
+    }
 
     if (s_DeltaTime > 0.1f) s_DeltaTime = 0.1f;
 }

@@ -23,7 +23,7 @@ void DrawTextureEx(const Texture& texture, Vector2 position, float rotation, flo
     float w = static_cast<float>(texture.width);
     float h = static_cast<float>(texture.height);
     
-    DrawTexturePro(texture, Rect(0.0f, 0.0f, w, h), Rect(position, w, h), Vector2(0.0f, 0.0f), rotation, color);
+    DrawTexturePro(texture, Rect(0.0f, 0.0f, w, h), Rect(position, w * scale, h * scale), Vector2(0.0f, 0.0f), rotation, color);
 }
 
 void DrawTexturePro(const Texture& texture, Rect source, Rect dest, Vector2 origin, float rotation, const Color& color) {

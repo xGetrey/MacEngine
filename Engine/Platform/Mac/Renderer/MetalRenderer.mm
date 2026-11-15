@@ -262,18 +262,31 @@ Texture LoadTexture(const char* path) {
     CGContextDrawImage(canvas, CGRectMake(0, 0, width, height), image);
     CGContextRelease(canvas);
     CGImageRelease(image);
-    
+
+    result = LoadTextureFromPixels(pixels.data(), static_cast<int>(width), static_cast<int>(height));
+    if (result.id != 0) std::cout << "Texture loaded: " << path << std::endl;
+    return result;
+}
+
+Texture LoadTextureFromPixels(const uint8_t* rgba, int width, int height) {
+    Texture result;
+
+    if (!s_Device) {
+        NSLog(@"LoadTextureFromPixels: előbb hozd létre a Window-t!");
+        return result;
+    }
+    if (!rgba || width <= 0 || height <= 0) return result;
+
     MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:width height:height mipmapped:NO];
     desc.usage = MTLTextureUsageShaderRead;
     id<MTLTexture> texture = [s_Device newTextureWithDescriptor:desc];
-    
-    [texture replaceRegion:MTLRegionMake2D(0, 0, width, height) mipmapLevel:0 withBytes:pixels.data() bytesPerRow:width*4];
-    
+
+    [texture replaceRegion:MTLRegionMake2D(0, 0, width, height) mipmapLevel:0 withBytes:rgba bytesPerRow:width*4];
+
     s_Textures.push_back(texture);
     result.id = static_cast<uint32_t>(s_Textures.size()-1);
-    result.width = static_cast<int>(width);
-    result.height = static_cast<int>(height);
-    std::cout << "Texture loaded: " << path << std::endl;
+    result.width = width;
+    result.height = height;
     return result;
 }
 

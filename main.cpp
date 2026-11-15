@@ -79,6 +79,9 @@ int main() {
         if (Engine::IsKeyPressed(Engine::Key::Num8)) Engine::SetAntialiasing(8);
         if (Engine::IsKeyPressed(Engine::Key::Space)) std::cout << "AA: " << Engine::GetAntialiasing() << std::endl;
         
+        Engine::DrawText("Árvíztűrő tükörfúrógép", {20, 20}, 32, {255, 255, 255, 255});
+        Engine::DrawText("ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP", {20, 60}, 32, {255, 255, 255, 255});
+        
         /*
         if (Engine::IsKeyPressed(Engine::Key::Space)) std::cout << Engine::GetDeltaTime();
         if (Engine::IsKeyPressed(Engine::Key::LeftShift))    std::cout << "Bal Shift LE" << std::endl;
