@@ -24,7 +24,7 @@ Texture LoadTexture(const char* path);
 void UnloadTexture(Texture& texture);
 
 void DrawTexture(const Texture& texture, Vector2 position, const Color& color);
-
+void DrawTextureEx(const Texture& texture, Vector2 position, float rotation, float scale, const Color& color);
 void DrawTexturePro(const Texture& texture, Rect source, Rect dest, Vector2 origin, float rotation, const Color& color);
 
 }

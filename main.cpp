@@ -38,6 +38,8 @@ int main() {
     Engine::Rect rect = Engine::Rect(Engine::Vector2(30.0f, 30.0f), 120.0f, 100.0f);
     //Engine::SetTargetFps(15);
     
+    float rotate = 0.0f;
+    
     while (!window.ShouldClose()) {
         window.PollEvents();
         //std::cout << Engine::GetWidth() << " " << Engine::GetHeight() << std::endl;
@@ -55,6 +57,9 @@ int main() {
         Engine::DrawSemicircle({400, 400}, 40.0f, -40.0f, {255, 255, 255, 255});
         Engine::DrawRectLines(rect, Engine::Color(255, 32, 0), 20);
         Engine::DrawTexture(texture, {300.0f, 300.0f}, {255, 255, 255, 255});
+        Engine::DrawTextureEx(texture, {500.0f, 300.0f}, rotate, 0.0f, {255, 255, 255, 255});
+        
+        rotate += 1;
         
         if (Engine::IsKeyDown(Engine::Key::D)) {
             rect.pos.x += 100.0f * Engine::GetDeltaTime();
