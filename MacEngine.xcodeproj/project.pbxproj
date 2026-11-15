@@ -10,6 +10,7 @@
 		FF4DEEAD308E618E00867503 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF4DEEAC308E618800867503 /* main.cpp */; };
 		FFCA5A0530A22FF7006907D2 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCA5A0430A22FF7006907D2 /* Metal.framework */; platformFilters = (ios, macos, tvos, xros, ); };
 		FFCA5A0730A2300D006907D2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCA5A0630A2300D006907D2 /* QuartzCore.framework */; platformFilters = (ios, macos, tvos, watchos, xros, ); };
+		FFF45D4330A9092F0058E26F /* main2.txt in Sources */ = {isa = PBXBuildFile; fileRef = FFF45D4230A909290058E26F /* main2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		FFCA5A0430A22FF7006907D2 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
 		FFCA5A0630A2300D006907D2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		FFF45D3F30A901890058E26F /* jungel_tree1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jungel_tree1.png; sourceTree = "<group>"; };
+		FFF45D4230A909290058E26F /* main2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = main2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +90,7 @@
 		000000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
+				FFF45D4230A909290058E26F /* main2.txt */,
 				FFF45D3F30A901890058E26F /* jungel_tree1.png */,
 				FF4DEEB2308E637800867503 /* CMakeList.txt */,
 				FF4DEEAC308E618800867503 /* main.cpp */,
@@ -172,6 +175,7 @@
 		000000000000000120000000 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				FFF45D4330A9092F0058E26F /* main2.txt in Sources */,
 				FF4DEEAD308E618E00867503 /* main.cpp in Sources */,
 			);
 		};

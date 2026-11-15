@@ -10,6 +10,7 @@
 #include <cstdint>
 #include "../Platform/Mac/Color.h"
 #include "../Core/Vector2.h"
+#include "../Core/Rect/Rect.h"
 
 namespace Engine {
 
@@ -22,6 +23,8 @@ struct Texture {
 Texture LoadTexture(const char* path);
 void UnloadTexture(Texture& texture);
 
-void DrawTexture(const Texture& texture, Vector2 position, const Color& colot);
+void DrawTexture(const Texture& texture, Vector2 position, const Color& color);
+
+void DrawTexturePro(const Texture& texture, Rect source, Rect dest, Vector2 origin, float rotation, const Color& color);
 
 }

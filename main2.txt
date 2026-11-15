@@ -1,0 +1,97 @@
+//
+//  main.cpp
+//  MyTool
+//
+//  Created by Gulyás Péter István on 2026. 11. 14..
+//
+
+#include "Engine/MacEngine.h"
+
+
+using namespace Engine;
+
+struct Ball {
+    Vector2 pos;
+    Color color;
+    float radius;
+    
+    float moveX;
+    float moveY;
+    
+    Ball() : pos({ GetWidth() / 2.0f, GetHeight() / 2.0f }), color({255, 255, 255, 255}), radius(20.0f), moveX(200.0f), moveY(-200.0f) { }
+};
+
+void teszt() {
+    std::cout << "Teszt" << std::endl;
+}
+
+int main() {
+    Window window = Window(1200, 800, "Faszopó");
+    
+    window.SetBackgroundColor(Engine::Color(0, 0, 50, 255));
+    
+    window.SetMiniaturizable(true);
+    
+    Engine::MenubarApi::menuSection("Teszt")
+        .Item(Engine::menuItem("Teszt").onClick(teszt))
+        .Separator()
+        .Item(Engine::menuItem("Teszt").onClick(teszt).shortcut("g"))
+        .registerMenu();
+    Engine::BuildMenubar();
+    Engine::SetAntialiasing(8);
+    
+    Rect player1 = Rect(20.0f, static_cast<float>(GetHeight()) / 2.0f - 50.0f, 20.0f, 100.0f);
+    Rect player2 = Rect(static_cast<float>(GetWidth() - 40.0f), static_cast<float>(GetHeight()) / 2.0f - 50.0f, 20.0f, 100.0f);
+    Ball ball = Ball();
+    
+    Rect ballCollision = Rect(ball.pos.x - ball.radius, ball.pos.y - ball.radius, ball.radius * 2, ball.radius * 2);
+    
+    while (!window.ShouldClose()) {
+        window.PollEvents();
+        
+        if (IsKeyDown(Key::S) && player1.pos.y + 400.0f * GetDeltaTime() < GetHeight() - player1.height) player1.pos.y += 400.0f * GetDeltaTime();
+        if (IsKeyDown(Key::W) && player1.pos.y - 400.0f * GetDeltaTime() > 0.0f) player1.pos.y -= 400.0f * GetDeltaTime();
+        
+        if (IsKeyDown(Key::Down) && player2.pos.y + 400.0f * GetDeltaTime() < GetHeight() - player2.height) player2.pos.y += 400.0f * GetDeltaTime();
+        if (IsKeyDown(Key::Up) && player2.pos.y - 400.0f * GetDeltaTime() > 0.0f) player2.pos.y -= 400.0f * GetDeltaTime();
+        
+        if (ball.pos.x + ball.moveX * GetDeltaTime() < 0.0f + ball.radius) ball.moveX = -ball.moveX;
+        if (ball.pos.x + ball.moveX * GetDeltaTime() > GetWidth() - ball.radius) ball.moveX = -ball.moveX;
+        
+        if (ball.pos.y + ball.moveY * GetDeltaTime() > GetHeight() - ball.radius) ball.moveY = -ball.moveY;
+        if (ball.pos.y + ball.moveY * GetDeltaTime() < 0.0f + ball.radius) ball.moveY = -ball.moveY;
+        
+        if (player1.pos.x < ballCollision.pos.x + ballCollision.width &&
+            player1.pos.x + player1.width > ballCollision.pos.x &&
+            player1.pos.x < ballCollision.pos.y + ballCollision.height &&
+            player1.pos.y + player1.height > ballCollision.pos.y) {
+            
+            ball.moveX = -ball.moveX;
+        }
+        
+        if (player2.pos.x < ballCollision.pos.x + ballCollision.width &&
+            player2.pos.x + player2.width > ballCollision.pos.x &&
+            player2.pos.y < ballCollision.pos.y + ballCollision.height &&
+            player2.pos.y + player2.height > ballCollision.pos.y) {
+            
+            ball.moveX = -ball.moveX;
+        }
+        
+        ball.pos.x += ball.moveX * GetDeltaTime();
+        ball.pos.y += ball.moveY * GetDeltaTime();
+        
+        ballCollision.pos.x = ball.pos.x - ball.radius;
+        ballCollision.pos.y = ball.pos.y - ball.radius;
+        
+        DrawRect(player1, {255, 255, 255, 255});
+        DrawRect(player2, {255, 255, 255, 255});
+        
+        DrawCircle(ball.pos, ball.radius, ball.color);
+        //DrawRectLines(ballCollision, {255, 0, 0, 255});
+        
+        Present();
+        
+    }
+    
+    return 0;
+}

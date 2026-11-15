@@ -49,7 +49,8 @@ int main() {
         Engine::DrawCircle(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), 40.0f, Engine::Color(255, 255, 0));
         Engine::DrawRoundedLine(Engine::Vector2(Engine::GetWidth()/2, Engine::GetHeight()/2), Engine::GetMousePos(), Engine::Color(0, 0, 0, 100), 20);
         
-        Engine::DrawPolygon({100.0f, 100.0f}, 100.0f, 6, {255, 255, 255, 255});
+        Engine::DrawPolygon({100.0f, 100.0f}, 100.0f, 6, {255, 25
+            , 255, 255});
         
         Engine::DrawSemicircle({400, 400}, 40.0f, -40.0f, {255, 255, 255, 255});
         Engine::DrawRectLines(rect, Engine::Color(255, 32, 0), 20);
