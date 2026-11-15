@@ -6,7 +6,7 @@
 //
 
 #include "Texture.h"
-#include "RenderBatch.h"
+#include "../Batch/RenderBatch.h"
 #include <cmath>
 #include <utility>
 

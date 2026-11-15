@@ -7,8 +7,8 @@
 
 #include "Font.h"
 #include "DefaultFontData.h"
-#include "../Core/Time/Time.h"
-#include "../Platform/Mac/Display/DisplayMetrics.h"
+#include "../../Core/Time/Time.h"
+#include "../../Platform/Mac/Display/DisplayMetrics.h"
 #include <vector>
 #include <algorithm>
 #include <cmath>

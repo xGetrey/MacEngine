@@ -12,10 +12,10 @@
 #import "../../../Renderer/Renderer.h"
 
 #include <simd/simd.h>
-#include "../../../Renderer/RenderBatch.h"
+#include "../../../Renderer/Batch/RenderBatch.h"
 #include "MetalShaders.h"
 #include <vector>
-#include "../../../Renderer/Texture.h"
+#include "../../../Renderer/Texture/Texture.h"
 #include <iostream>
 
 namespace {

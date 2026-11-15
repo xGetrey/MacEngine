@@ -9,8 +9,8 @@
 
 #include <cstddef>
 #include <vector>
-#include "../Core/Vector2.h"
-#include "../Platform/Mac/Color.h"
+#include "../../Core/Vector2.h"
+#include "../../Platform/Mac/Color.h"
 #include <cstdint>
 
 namespace Engine::Internal {

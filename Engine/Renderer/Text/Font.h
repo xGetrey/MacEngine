@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "Texture.h"
+#include "../Texture/Texture.h"
 #include <string>
 #include <vector>
 

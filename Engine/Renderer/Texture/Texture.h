@@ -8,9 +8,9 @@
 #pragma once
 
 #include <cstdint>
-#include "../Platform/Mac/Color.h"
-#include "../Core/Vector2.h"
-#include "../Core/Rect/Rect.h"
+#include "../../Platform/Mac/Color.h"
+#include "../../Core/Vector2.h"
+#include "../../Core/Rect/Rect.h"
 
 namespace Engine {
 

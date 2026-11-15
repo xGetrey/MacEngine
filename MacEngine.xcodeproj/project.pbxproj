@@ -69,7 +69,6 @@
 				Platform/Mac/WindowManager/Menubar/Section/MenuData.h = sourcecode.cpp.cpp;
 				Platform/Mac/WindowManager/Window/Window.h = sourcecode.cpp.cpp;
 				Renderer/Renderer.h = sourcecode.cpp.cpp;
-				Renderer/Texture.h = sourcecode.cpp.cpp;
 			};
 			path = Engine;
 			sourceTree = "<group>";

@@ -5,8 +5,8 @@
 //  Created by Gulyás Péter István on 2026. 11. 13..
 //
 
-#include "Renderer.h"
-#include "RenderBatch.h"
+#include "Shapes.h"
+#include "../Batch/RenderBatch.h"
 
 #include <cmath>
 
