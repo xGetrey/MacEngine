@@ -53,6 +53,7 @@
 				FFCA5A0830A2310A006907D2 /* Exceptions for "Engine" folder in "MyTool" target */,
 			);
 			explicitFileTypes = {
+				Core/Camera2D/Camera2D.h = sourcecode.cpp.cpp;
 				Core/Rect/Rect.h = sourcecode.cpp.cpp;
 				Core/Time/Time.h = sourcecode.cpp.cpp;
 				Core/Vector2.h = sourcecode.cpp.cpp;
