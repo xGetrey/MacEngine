@@ -14,6 +14,7 @@
 #include "Platform/Mac/Input/Input.h"
 #include "Core/Vector2.h"
 #include "Core/Time/Time.h"
+#include "Core/Camera2D/Camera2D.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Shapes/Shapes.h"
 #include "Renderer/Texture/Texture.h"

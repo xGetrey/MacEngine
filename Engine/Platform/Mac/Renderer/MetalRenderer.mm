@@ -17,8 +17,18 @@
 #include <vector>
 #include "../../../Renderer/Texture/Texture.h"
 #include <iostream>
+#include <cmath>
 
 namespace {
+// A shader CameraData struktúrájának C++ megfelelője.
+// A simd_float2 ugyanúgy 8 bájtra igazodik, mint a Metal float2-je, így a kettő bájtra pontosan egyezik.
+struct CameraUniform {
+    simd_float2 target;
+    simd_float2 offset;
+    simd_float2 rotation;   // (cos, sin)
+    float zoom;
+};
+
 id<MTLDevice> s_Device = nil;
 id<MTLCommandQueue> s_Queue = nil;
 CAMetalLayer* s_Layer = nil;
@@ -200,12 +210,25 @@ void Present() {
 
             simd_float2 viewport = { (float)size.width, (float)size.height };
             [enc setVertexBytes:&viewport length:sizeof(viewport) atIndex:1];   // → [[buffer(1)]]
+
+            const auto& cameras = Internal::Batch_GetCameras();
             for (const auto& command : Internal::Batch_GetCommands()) {
                 id<MTLTexture> texture = s_WhiteTexture;
                 if (command.texture < s_Textures.size() && s_Textures[command.texture]) {
                     texture = s_Textures[command.texture];
                 }
-                
+
+                // A parancs saját kamerája → [[buffer(2)]]
+                const Camera2D& cam = cameras[command.camera];
+                float rad = cam.rotation * static_cast<float>(M_PI) / 180.0f;
+                CameraUniform camera = {
+                    { cam.target.x, cam.target.y },
+                    { cam.offset.x, cam.offset.y },
+                    { std::cos(rad), std::sin(rad) },
+                    cam.zoom
+                };
+                [enc setVertexBytes:&camera length:sizeof(camera) atIndex:2];
+
                 [enc setFragmentTexture:texture atIndex:0];
                 [enc drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:command.firstVertex vertexCount:command.vertexCount];
             }

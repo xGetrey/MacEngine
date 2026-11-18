@@ -11,6 +11,7 @@
 #include <vector>
 #include "../../Core/Vector2.h"
 #include "../../Platform/Mac/Color.h"
+#include "../../Core/Camera2D/Camera2D.h"
 #include <cstdint>
 
 namespace Engine::Internal {
@@ -27,6 +28,7 @@ struct DrawCommand {
     uint32_t texture;
     size_t firstVertex;
     size_t vertexCount;
+    uint32_t camera;
 };
 
 // count darab csúcsnak foglal helyet, és az első új csúcsra mutató pointert adja vissza.
@@ -36,5 +38,9 @@ Vertex* Batch_Allocate(size_t count, uint32_t texture = 0);
 const std::vector<Vertex>& Batch_GetVertices();
 const std::vector<DrawCommand>& Batch_GetCommands();
 void Batch_Clear();
+
+void Batch_SetCamera(const Camera2D& camera);
+void Batch_ResetCamera();
+const std::vector<Camera2D>& Batch_GetCameras();
 
 }

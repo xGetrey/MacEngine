@@ -47,11 +47,14 @@ int main() {
     
     // Tesztoldalak: Tab-bal lehet váltani
     int page = 0;
-    const char* pageNames[] = { "Alakzatok", "Textúrák", "Szöveg" };
+    const char* pageNames[] = { "Alakzatok", "Textúrák", "Szöveg", "Kamera" };
     
     float rotate = 0.0f;
     float time = 0.0f;
     bool fpsLimit = false;
+    
+    Engine::Camera2D camera;
+    Engine::Vector2 player(0.0f, 0.0f);
     
     // Kis felirat egy teszt alá
     auto label = [&](const char* text, float x, float y) {
@@ -66,7 +69,7 @@ int main() {
         rotate += 60.0f * dt;   // 60 fok / másodperc
         
         // --- Vezérlés ---------------------------------------------------
-        if (Engine::IsKeyPressed(Engine::Key::Tab)) page = (page + 1) % 3;
+        if (Engine::IsKeyPressed(Engine::Key::Tab)) page = (page + 1) % 4;
         
         if (Engine::IsKeyPressed(Engine::Key::Num1)) Engine::SetAntialiasing(1);
         if (Engine::IsKeyPressed(Engine::Key::Num4)) Engine::SetAntialiasing(4);
@@ -79,12 +82,7 @@ int main() {
             Engine::SetTargetFps(fpsLimit ? 30 : 240);
         }
         
-        // --- Fejléc (minden oldalon) ------------------------------------
-        Engine::DrawText(std::format("[{}/3] {}", page + 1, pageNames[page]), {10, 10}, 16, yellow);
-        Engine::DrawText(std::format("Tab: oldalváltás   1/4/8: AA ({}x)   L: FPS-korlát ({})",
-                                     Engine::GetAntialiasing(), Engine::GetTargetFps()),
-                         {10, 32}, 8, gray);
-        Engine::DrawFPS({static_cast<float>(Engine::GetWidth()) - 80.0f, 10});
+        Engine::BeginDraw();
         
         // --- 1. oldal: alakzatok ----------------------------------------
         if (page == 0) {
@@ -213,6 +211,61 @@ int main() {
             }
         }
         
+        // --- 4. oldal: kamera -------------------------------------------
+        if (page == 3) {
+            // A player a VILÁGBAN mozog, a kamera követi
+            if (Engine::IsKeyDown(Engine::Key::D)) player.x += 300.0f * dt;
+            if (Engine::IsKeyDown(Engine::Key::A)) player.x -= 300.0f * dt;
+            if (Engine::IsKeyDown(Engine::Key::W)) player.y -= 300.0f * dt;
+            if (Engine::IsKeyDown(Engine::Key::S)) player.y += 300.0f * dt;
+            
+            if (Engine::IsKeyDown(Engine::Key::E)) camera.zoom *= 1.0f + dt;   // közelít
+            if (Engine::IsKeyDown(Engine::Key::Q)) camera.zoom *= 1.0f - dt;   // távolít
+            if (Engine::IsKeyDown(Engine::Key::T)) camera.rotation += 45.0f * dt;
+            if (Engine::IsKeyDown(Engine::Key::R)) camera.rotation -= 45.0f * dt;
+            if (Engine::IsKeyPressed(Engine::Key::C)) { camera.zoom = 1.0f; camera.rotation = 0.0f; }
+            
+            camera.target = player;                                                       // ezt nézi
+            camera.offset = { Engine::GetWidth() / 2.0f, Engine::GetHeight() / 2.0f };   // a képernyő közepén
+            
+            Engine::Vector2 mouseWorld = camera.ScreenToWorld(Engine::GetMousePos());
+            
+            Engine::BeginCamera(camera);
+                // Sakktábla-padló: 20 x 20 kocka, -1000-től 1000-ig
+                for (int gx = -10; gx < 10; gx++) {
+                    for (int gy = -10; gy < 10; gy++) {
+                        Engine::Color c = ((gx + gy) & 1) ? Engine::Color(40, 40, 60) : Engine::Color(60, 60, 90);
+                        Engine::DrawRect(Engine::Rect(gx * 100.0f, gy * 100.0f, 100.0f, 100.0f), c);
+                    }
+                }
+                
+                // A világ (0,0) pontja
+                Engine::DrawCircle({0, 0}, 12.0f, Engine::Color(255, 0, 0));
+                Engine::DrawText("(0, 0)", {16, -8}, 16, white);
+                
+                // Fák a világban
+                Engine::DrawTexture(texture, {300, -250}, white);
+                Engine::DrawTexture(texture, {-500, 200}, white);
+                
+                // A player
+                Engine::DrawRect(Engine::Rect(player.x - 16, player.y - 16, 32, 32), yellow);
+                
+                // Zöld pötty oda, ahol az egér a VILÁGBAN van
+                Engine::DrawCircle(mouseWorld, 6.0f, Engine::Color(0, 255, 0));
+            Engine::EndCamera();
+            
+            // --- UI: ez már nem mozog a kamerával ---
+            Engine::DrawText(std::format("Player: {:.0f}, {:.0f}   Egér a világban: {:.0f}, {:.0f}",
+                                         player.x, player.y, mouseWorld.x, mouseWorld.y), {10, 50}, 8, white);
+            Engine::DrawText(std::format("Zoom: {:.2f}   Forgás: {:.0f} fok", camera.zoom, camera.rotation),
+                             {10, 62}, 8, white);
+            Engine::DrawText("WASD: mozgás   Q/E: zoom   R/T: forgatás   C: alaphelyzet", {10, 74}, 8, gray);
+            
+            // A WorldToScreen ellenőrzése: ez a zöld keret UI-ként, kézzel átváltva készül
+            Engine::Vector2 o = camera.WorldToScreen({0, 0});
+            Engine::DrawRectLines(Engine::Rect(o.x - 18, o.y - 18, 36, 36), Engine::Color(0, 255, 0), 2);
+        }
+        
         /*
         if (Engine::IsKeyPressed(Engine::Key::Space)) std::cout << Engine::GetDeltaTime();
         if (Engine::IsKeyPressed(Engine::Key::LeftShift))    std::cout << "Bal Shift LE" << std::endl;
@@ -292,7 +345,14 @@ int main() {
         
         if (Engine::IsKeyReleased(Engine::Key::K)) std::cout << "K elengedve" << std::endl;
         */
-        Engine::Present();
+        // --- Fejléc (minden oldalon): utoljára, hogy minden fölött legyen ---
+        Engine::DrawText(std::format("[{}/4] {}", page + 1, pageNames[page]), {10, 10}, 16, yellow);
+        Engine::DrawText(std::format("Tab: oldalváltás   1/4/8: AA ({}x)   L: FPS-korlát ({})",
+                                     Engine::GetAntialiasing(), Engine::GetTargetFps()),
+                         {10, 32}, 8, gray);
+        Engine::DrawFPS({static_cast<float>(Engine::GetWidth()) - 80.0f, 10});
+        
+        Engine::EndDraw();
     }
     
     return 0;

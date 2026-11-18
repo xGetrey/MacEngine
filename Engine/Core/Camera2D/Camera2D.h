@@ -16,6 +16,9 @@ struct Camera2D {
     Vector2 offset;
     float rotation = 0.0f;
     float zoom = 1.0f;
+    
+    Vector2 WorldToScreen(Vector2 position) const;
+    Vector2 ScreenToWorld(Vector2 position) const;
 };
 
 }
