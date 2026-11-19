@@ -61,6 +61,11 @@ int main() {
         Engine::DrawText(text, {x, y}, 8, gray);
     };
     
+    Engine::Vector2 vector1 = {20.0f, 20.0f};
+    Engine::Vector2 vector2 = {24.0f, 45.0f};
+    
+    std::cout << (vector1 + vector2).toString() + " +" << std::endl;
+        
     while (!window.ShouldClose()) {
         window.PollEvents();
         
