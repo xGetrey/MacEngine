@@ -65,6 +65,11 @@ int main() {
     Engine::Vector2 vector2 = {24.0f, 45.0f};
     
     std::cout << (vector1 + vector2).toString() + " +" << std::endl;
+    vector2 += vector1;
+    std::cout << vector2.toString() << " +=" << std::endl;
+    std::cout << (-vector2).toString() << " -" << std::endl;
+    
+    std::cout << (vector1 + vector2).negate().toString() + " negate()" << std::endl;
         
     while (!window.ShouldClose()) {
         window.PollEvents();
