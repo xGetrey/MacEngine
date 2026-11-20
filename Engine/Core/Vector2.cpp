@@ -53,6 +53,16 @@ Vector2 Vector2::subtracted(const Vector2 other) const {
     return Vector2(x - other.x, y-other.y);
 }
 
+Vector2& Vector2::scale(const Vector2 other) {
+    x *= other.x;
+    y *= other.y;
+    return *this;
+}
+
+Vector2 Vector2::scaled(const Vector2 other) const {
+    return Vector2(x * other.x, y * other.y);
+}
+
 Vector2& Vector2::negate() {
     x = -x;
     y = -y;
@@ -63,19 +73,28 @@ Vector2 Vector2::negated() const {
     return Vector2(-x, -y);
 }
 
+Vector2& Vector2::divide(const Vector2 other) {
+    x /= other.x;
+    y /= other.y;
+    return *this;
+}
+
+Vector2 Vector2::divided(const Vector2 other) const {
+    return Vector2(x / other.x, y / other.y);
+}
+
 //operators
 Vector2 Vector2::operator+(const Vector2 other) const {
     return added(other);
 }
 
-Vector2 Vector2::operator-() const {
-    return Vector2(-x, -y);
-}
-
-
 Vector2& Vector2::operator+=(const Vector2 other) {
     add(other);
     return *this;
+}
+
+Vector2 Vector2::operator-() const {
+    return Vector2(-x, -y);
 }
 
 Vector2 Vector2::operator-(const Vector2 other) const {
@@ -84,6 +103,26 @@ Vector2 Vector2::operator-(const Vector2 other) const {
 
 Vector2& Vector2::operator-=(const Vector2 other) {
     return subtract(other);
+}
+
+Vector2 Vector2::operator*(const Vector2 other) const {
+    return scaled(other);
+}
+
+Vector2& Vector2::operator*=(const Vector2 other) {
+    return scale(other);
+}
+
+Vector2 Vector2::operator/(const Vector2 other) const {
+    return divided(other);
+}
+
+Vector2& Vector2::operator/=(const Vector2 other) {
+    return divide(other);
+}
+
+bool Vector2::operator==(const Vector2 other) {
+    return x == other.x && y == other.y;
 }
 
 std::string Vector2::toString() const {
