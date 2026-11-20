@@ -70,7 +70,23 @@ int main() {
     std::cout << (-vector2).toString() << " -" << std::endl;
     
     std::cout << (vector1 + vector2).negate().toString() + " negate()" << std::endl;
-        
+     
+    
+    Engine::Vector2 hihi = {32.0f, 32.0f};
+    
+    hihi += 3.0f;
+    
+    std::cout << "x: " << hihi.x << ", y: " << hihi.y << std::endl;
+    
+    hihi = hihi + 3.0f;
+    
+    std::cout << "x: " << hihi.x << ", y: " << hihi.y << std::endl;
+    
+    hihi = 3.0f + hihi;
+    
+    std::cout << "x: " << hihi.x << ", y: " << hihi.y << std::endl;
+    
+    
     while (!window.ShouldClose()) {
         window.PollEvents();
         

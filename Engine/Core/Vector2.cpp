@@ -121,12 +121,71 @@ Vector2& Vector2::operator/=(const Vector2 other) {
     return divide(other);
 }
 
-bool Vector2::operator==(const Vector2 other) {
+bool Vector2::operator==(const Vector2 other) const {
     return x == other.x && y == other.y;
 }
 
+//float
+Vector2 Vector2::operator+(float value) const {
+    return Vector2(x + value, y + value);
+}
+
+Vector2 Vector2::operator-(float value) const {
+    return Vector2(x - value, y - value);
+}
+
+Vector2 Vector2::operator*(float value) const {
+    return Vector2(x * value, y * value);
+}
+
+Vector2 Vector2::operator/(float value) const {
+    return Vector2(x / value, y / value);
+}
+
+
+Vector2& Vector2::operator+=(float value) {
+    x += value;
+    y += value;
+    return *this;
+}
+
+Vector2& Vector2::operator-=(float value) {
+    x -= value;
+    y -= value;
+    return *this;
+}
+
+Vector2& Vector2::operator*=(float value) {
+    x *= value;
+    y *= value;
+    return *this;
+}
+
+Vector2& Vector2::operator/=(float value) {
+    x /= value;
+    y /= value;
+    return *this;
+}
+
+
 std::string Vector2::toString() const {
     return "x: " + std::to_string(x) + ", y: " + std::to_string(y);
+}
+
+Vector2 operator+(float value, Vector2 vector2) {
+    return vector2.operator+(value);
+}
+
+Vector2 operator-(float value, Vector2 vector2) {
+    return Vector2(value - vector2.x, value - vector2.y);
+}
+
+Vector2 operator*(float value, Vector2 vector2) {
+    return vector2.operator*(value);
+}
+
+Vector2 operator/(float value, Vector2 vector2) {
+    return Vector2(value / vector2.x, value / vector2.y);
 }
 
 }

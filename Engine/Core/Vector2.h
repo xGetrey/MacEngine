@@ -25,7 +25,17 @@ struct Vector2 {
     Vector2& operator*=(const Vector2 other);
     Vector2& operator/=(const Vector2 other);
     
-    bool operator==(const Vector2 other);
+    Vector2 operator+(float value) const;
+    Vector2 operator-(float value) const;
+    Vector2 operator*(float value) const;
+    Vector2 operator/(float value) const;
+    
+    Vector2& operator+=(float value);
+    Vector2& operator-=(float value);
+    Vector2& operator*=(float value);
+    Vector2& operator/=(float value);
+    
+    bool operator==(const Vector2 other) const;
     
     Vector2() : x(0.0f), y(0.0f) {}
     Vector2(float x, float y);
@@ -51,4 +61,10 @@ struct Vector2 {
     Vector2 divided(const Vector2 other) const;
     Vector2 negated() const;
 };
+
+Vector2 operator+(float value, Vector2 vector2);
+Vector2 operator-(float value, Vector2 vector2);
+Vector2 operator*(float value, Vector2 vector2);
+Vector2 operator/(float value, Vector2 vector2);
+
 }
