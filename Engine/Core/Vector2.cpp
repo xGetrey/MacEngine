@@ -6,6 +6,7 @@
 //
 
 #include "Vector2.h"
+#include <cmath>
 
 namespace Engine {
 
@@ -28,7 +29,7 @@ void Vector2::set(float newX, float newY) {
     y = newY;
 }
 
-Vector2 Vector2::copy() const {
+[[nodiscard]] Vector2 Vector2::copy() const {
     return Vector2(x, y);
 }
 
@@ -39,7 +40,7 @@ Vector2& Vector2::add(Vector2 other) {
     return *this;
 }
 
-Vector2 Vector2::added(const Vector2 other) const {
+[[nodiscard]] Vector2 Vector2::added(const Vector2 other) const {
     return Vector2(x + other.x, y + other.y);
 }
 
@@ -49,7 +50,7 @@ Vector2& Vector2::subtract(const Vector2 other) {
     return *this;
 }
 
-Vector2 Vector2::subtracted(const Vector2 other) const {
+[[nodiscard]] Vector2 Vector2::subtracted(const Vector2 other) const {
     return Vector2(x - other.x, y-other.y);
 }
 
@@ -59,7 +60,7 @@ Vector2& Vector2::scale(const Vector2 other) {
     return *this;
 }
 
-Vector2 Vector2::scaled(const Vector2 other) const {
+[[nodiscard]] Vector2 Vector2::scaled(const Vector2 other) const {
     return Vector2(x * other.x, y * other.y);
 }
 
@@ -69,7 +70,7 @@ Vector2& Vector2::negate() {
     return *this;
 }
 
-Vector2 Vector2::negated() const {
+[[nodiscard]] Vector2 Vector2::negated() const {
     return Vector2(-x, -y);
 }
 
@@ -79,7 +80,7 @@ Vector2& Vector2::divide(const Vector2 other) {
     return *this;
 }
 
-Vector2 Vector2::divided(const Vector2 other) const {
+[[nodiscard]] Vector2 Vector2::divided(const Vector2 other) const {
     return Vector2(x / other.x, y / other.y);
 }
 
@@ -186,6 +187,14 @@ Vector2 operator*(float value, Vector2 vector2) {
 
 Vector2 operator/(float value, Vector2 vector2) {
     return Vector2(value / vector2.x, value / vector2.y);
+}
+
+[[nodiscard]] float Vector2::squaredLength() const {
+    return x * x + y * y;
+}
+
+[[nodiscard]] float Vector2::length() const {
+    return std::sqrt(squaredLength());
 }
 
 }

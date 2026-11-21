@@ -55,11 +55,14 @@ struct Vector2 {
     Vector2& divide(const Vector2 other);
     Vector2& negate();
     
-    Vector2 added(const Vector2 other) const;
-    Vector2 subtracted(const Vector2 other) const;
-    Vector2 scaled(const Vector2 other) const;
-    Vector2 divided(const Vector2 other) const;
-    Vector2 negated() const;
+    [[nodiscard]] Vector2 added(const Vector2 other) const;
+    [[nodiscard]] Vector2 subtracted(const Vector2 other) const;
+    [[nodiscard]] Vector2 scaled(const Vector2 other) const;
+    [[nodiscard]] Vector2 divided(const Vector2 other) const;
+    [[nodiscard]] Vector2 negated() const;
+    
+    [[nodiscard]] float length() const;
+    [[nodiscard]] float squaredLength() const;
 };
 
 Vector2 operator+(float value, Vector2 vector2);

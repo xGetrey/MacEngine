@@ -86,7 +86,6 @@ int main() {
     
     std::cout << "x: " << hihi.x << ", y: " << hihi.y << std::endl;
     
-    
     while (!window.ShouldClose()) {
         window.PollEvents();
         
