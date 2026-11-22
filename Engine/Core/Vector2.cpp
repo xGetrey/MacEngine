@@ -227,4 +227,28 @@ Vector2& Vector2::normalize() {
     return x * other.y - y * other.x;
 }
 
+Vector2 Vector2::lerp(const Vector2 other, float t) const {
+    return *this + (other - *this) * t;
+}
+
+Vector2 Vector2::perpendicular() const {
+    return Vector2(-y, x);
+}
+
+Vector2 Vector2::rotated(float degrees) const {
+    const float rad = degrees * static_cast<float>(M_PI) / 180.0f;
+    const float c = std::cos(rad);
+    const float s = std::sin(rad);
+    return Vector2(x * c - y * s, x * s + y * c);
+}
+
+Vector2& Vector2::rotate(float degrees) {
+    *this = rotated(degrees);
+    return *this;
+}
+
+float Vector2::angle() const {
+    return std::atan2(y, x) * 180.0f / static_cast<float>(M_PI);
+}
+
 }
