@@ -86,6 +86,14 @@ int main() {
     
     std::cout << "x: " << hihi.x << ", y: " << hihi.y << std::endl;
     
+    std::cout << vector1.length() << std::endl;
+    
+    Engine::Vector2 a{2.0f, 5.0f};
+    Engine::Vector2 b{10.0f, -1.0f};
+    std::cout << b.distance(a) << std::endl;
+    std::cout << a.squaredDistance(b) << std::endl;
+    std::cout << a.normalized().toString() << std::endl;
+    
     while (!window.ShouldClose()) {
         window.PollEvents();
         

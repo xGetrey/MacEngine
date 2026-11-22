@@ -197,4 +197,26 @@ Vector2 operator/(float value, Vector2 vector2) {
     return std::sqrt(squaredLength());
 }
 
+[[nodiscard]] float Vector2::distance(const Vector2 other) const {
+    return (other - *this).length();
+}
+
+[[nodiscard]] float Vector2::squaredDistance(const Vector2 other) const {
+    return (other - *this).squaredLength();
+}
+
+[[nodiscard]] Vector2 Vector2::normalized() const {
+    const float len = length();
+    if (len > 0.0f) {
+        const float invLen = 1 / len;
+        return {x * invLen, y * invLen};
+    }
+    return {0.0f, 0.0f};
+}
+
+Vector2& Vector2::normalize() {
+    *this = normalized();
+    return *this;
+}
+
 }

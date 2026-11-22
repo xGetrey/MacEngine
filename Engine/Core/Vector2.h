@@ -63,6 +63,10 @@ struct Vector2 {
     
     [[nodiscard]] float length() const;
     [[nodiscard]] float squaredLength() const;
+    [[nodiscard]] float distance(const Vector2 other) const;
+    [[nodiscard]] float squaredDistance(const Vector2 other) const;
+    [[nodiscard]] Vector2 normalized() const;
+    Vector2& normalize();
 };
 
 Vector2 operator+(float value, Vector2 vector2);
