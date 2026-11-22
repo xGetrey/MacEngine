@@ -35,8 +35,6 @@ struct Vector2 {
     Vector2& operator*=(float value);
     Vector2& operator/=(float value);
     
-    bool operator==(const Vector2 other) const;
-    
     Vector2() : x(0.0f), y(0.0f) {}
     Vector2(float x, float y);
     
@@ -70,14 +68,10 @@ struct Vector2 {
     [[nodiscard]] float cross(const Vector2 other) const;
     Vector2& normalize();
 
-    // t = 0 -> *this, t = 1 -> other, köztes t -> a kettő közötti pont
     [[nodiscard]] Vector2 lerp(const Vector2 other, float t) const;
-    // 90 fokkal elforgatott vektor: (-y, x)
     [[nodiscard]] Vector2 perpendicular() const;
-    // Forgatás fokban (az engine többi része is fokot használ)
     [[nodiscard]] Vector2 rotated(float degrees) const;
     Vector2& rotate(float degrees);
-    // A vektor iránya fokban, -180 és 180 között (atan2)
     [[nodiscard]] float angle() const;
 };
 
