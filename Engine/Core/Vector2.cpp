@@ -219,4 +219,12 @@ Vector2& Vector2::normalize() {
     return *this;
 }
 
+[[nodiscard]] float Vector2::dot(const Vector2 other) const {
+    return x * other.x + y * other.y;
+}
+
+[[nodiscard]] float Vector2::cross(const Vector2 other) const {
+    return x * other.y - y * other.x;
+}
+
 }

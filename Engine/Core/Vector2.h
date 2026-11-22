@@ -66,6 +66,8 @@ struct Vector2 {
     [[nodiscard]] float distance(const Vector2 other) const;
     [[nodiscard]] float squaredDistance(const Vector2 other) const;
     [[nodiscard]] Vector2 normalized() const;
+    [[nodiscard]] float dot(const Vector2 other) const;
+    [[nodiscard]] float cross(const Vector2 other) const;
     Vector2& normalize();
 };
 
