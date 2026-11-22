@@ -70,7 +70,12 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     Internal::Time_Init();
     SetTargetFps(Engine::DisplayMetrics.GetDisplayHz());
     
+    // CMake-ből abszolút útvonalat kap, az Xcode-projekt a régi relatív útvonalat használja
+#ifdef MACENGINE_DEFAULT_ICON
+    Window::Get().SetIcon(MACENGINE_DEFAULT_ICON);
+#else
     Window::Get().SetIcon("Engine/MacEngineIcon.png");
+#endif
 }
 
 Window::~Window() {
