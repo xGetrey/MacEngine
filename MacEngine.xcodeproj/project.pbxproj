@@ -27,11 +27,11 @@
 		FFCA5A0830A2310A006907D2 /* Exceptions for "Engine" folder in "MyTool" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Core/Color/Color.h,
 				Core/Rect/Rect.h,
 				Core/Time/Time.h,
-				Core/Vector2.h,
+				Core/Vector2/Vector2.h,
 				MacEngine.h,
-				Platform/Mac/Color.h,
 				Platform/Mac/Display/DisplayMetrics.h,
 				Platform/Mac/Input/KeyCodes.h,
 				Platform/Mac/Input/MacKeyMap.h,
@@ -54,11 +54,11 @@
 			);
 			explicitFileTypes = {
 				Core/Camera2D/Camera2D.h = sourcecode.cpp.cpp;
+				Core/Color/Color.h = sourcecode.c;
 				Core/Rect/Rect.h = sourcecode.cpp.cpp;
 				Core/Time/Time.h = sourcecode.cpp.cpp;
-				Core/Vector2.h = sourcecode.cpp.cpp;
+				Core/Vector2/Vector2.h = sourcecode.cpp.cpp;
 				MacEngine.h = sourcecode.cpp.cpp;
-				Platform/Mac/Color.h = sourcecode.c;
 				Platform/Mac/Display/DisplayMetrics.h = sourcecode.cpp.cpp;
 				Platform/Mac/Input/Input.cpp = sourcecode.cpp.cpp;
 				Platform/Mac/Input/Input.h = sourcecode.cpp.h;

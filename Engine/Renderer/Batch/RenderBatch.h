@@ -9,8 +9,8 @@
 
 #include <cstddef>
 #include <vector>
-#include "../../Core/Vector2.h"
-#include "../../Platform/Mac/Color.h"
+#include "../../Core/Vector2/Vector2.h"
+#include "../../Core/Color/Color.h"
 #include "../../Core/Camera2D/Camera2D.h"
 #include <cstdint>
 

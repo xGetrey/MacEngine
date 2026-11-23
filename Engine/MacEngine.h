@@ -8,11 +8,11 @@
 #pragma once
 
 #include "Platform/Mac/WindowManager/Window/Window.h"
-#include "Platform/Mac/Color.h"
+#include "Core/Color/Color.h"
 #include "Platform/Mac/Display/DisplayMetrics.h"
 #include "Platform/Mac/WindowManager/Menubar/MenubarAPI.h"
 #include "Platform/Mac/Input/Input.h"
-#include "Core/Vector2.h"
+#include "Core/Vector2/Vector2.h"
 #include "Core/Time/Time.h"
 #include "Core/Camera2D/Camera2D.h"
 #include "Renderer/Renderer.h"

@@ -6,7 +6,7 @@
 //
 
 #pragma once
-#include "../Platform/Mac/Color.h"
+#include "../Core/Color/Color.h"
 #include "../Core/Camera2D/Camera2D.h"
 
 namespace Engine {

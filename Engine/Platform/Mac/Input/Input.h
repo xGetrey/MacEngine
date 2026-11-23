@@ -8,7 +8,7 @@
 #pragma once
 
 #include "KeyCodes.h"
-#include "../../../Core/Vector2.h"
+#include "../../../Core/Vector2/Vector2.h"
 
 namespace Engine {
 

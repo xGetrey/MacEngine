@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../Vector2.h"
+#include "../Vector2/Vector2.h"
 
 namespace Engine {
 
