@@ -16,8 +16,13 @@ add_library(MacEngine STATIC ${MACENGINE_SOURCES})
 # A .mm fájlok ARC-cal (automatikus memóriakezeléssel) fordulnak, mint az Xcode-ban
 target_compile_options(MacEngine PRIVATE $<$<COMPILE_LANGUAGE:OBJCXX>:-fobjc-arc>)
 
-# A publikus fejlécek: a felhasználó így írhatja: #include "MacEngine.h"
-target_include_directories(MacEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Engine)
+# A publikus fejlécek:
+#  - a projekten belül (add_subdirectory): #include "MacEngine.h"
+#  - telepítés után:                         #include <MacEngine/MacEngine.h>
+target_include_directories(MacEngine PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Engine>
+    $<INSTALL_INTERFACE:include>
+)
 
 # Az alapértelmezett ikon abszolút útvonala, így bármelyik mappából indul a program, megtalálja
 target_compile_definitions(MacEngine PRIVATE
@@ -36,3 +41,29 @@ if(PROJECT_IS_TOP_LEVEL)
     add_executable(Example main.cpp)
     target_link_libraries(Example PRIVATE MacEngine)
 endif()
+
+# 4. Telepítés (cmake --install): /usr/local/lib és /usr/local/include/MacEngine
+include(GNUInstallDirs)
+
+install(TARGETS MacEngine
+    EXPORT MacEngineTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+# Az Engine mappa szerkezete megmarad, csak a .h fájlok kerülnek át
+install(DIRECTORY Engine/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/MacEngine
+    FILES_MATCHING PATTERN "*.h"
+)
+
+# find_package(MacEngine) támogatás más CMake-projektekhez
+install(EXPORT MacEngineTargets
+    NAMESPACE MacEngine::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/MacEngine
+)
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/MacEngineConfig.cmake
+    "include(\"\${CMAKE_CURRENT_LIST_DIR}/MacEngineTargets.cmake\")\n"
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/MacEngineConfig.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/MacEngine
+)
