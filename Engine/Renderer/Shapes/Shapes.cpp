@@ -13,10 +13,10 @@
 namespace Engine {
 
 void DrawRect(const Rect& rect, const Color& color) {
-    Vector2 tl(rect.Left(), rect.Top());
-    Vector2 tr(rect.Right(), rect.Top());
-    Vector2 bl(rect.Left(), rect.Bottom());
-    Vector2 br(rect.Right(), rect.Bottom());
+    Vector2 tl(rect.getLeft(), rect.getTop());
+    Vector2 tr(rect.getRight(), rect.getTop());
+    Vector2 bl(rect.getLeft(), rect.getBottom());
+    Vector2 br(rect.getRight(), rect.getBottom());
 
     Internal::Vertex* v = Internal::Batch_Allocate(6);
     v[0] = {tl, color};
@@ -35,13 +35,13 @@ void DrawRectLines(const Rect& rect, const Color& color, const int thickness) {
 
     float t = static_cast<float>(thickness);
 
-    if (t * 2 >= rect.width || t * 2 >= rect.height) {
+    if (t * 2 >= rect.getWidth() || t * 2 >= rect.getHeight()) {
         DrawRect(rect, color);
         return;
     }
 
-    float x = rect.Left(), y = rect.Top();
-    float w = rect.width, h = rect.height;
+    float x = rect.getLeft(), y = rect.getTop();
+    float w = rect.getWidth(), h = rect.getHeight();
 
     DrawRect(Rect(x, y, w, t), color);
     DrawRect(Rect(x, y + h - t, w, t), color);

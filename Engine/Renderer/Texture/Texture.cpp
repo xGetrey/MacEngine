@@ -29,34 +29,34 @@ void DrawTextureEx(const Texture& texture, Vector2 position, float rotation, flo
 void DrawTexturePro(const Texture& texture, Rect source, Rect dest, Vector2 origin, float rotation, const Color& color) {
     if (texture.id == 0 || texture.width == 0 || texture.height == 0) return;
 
-    bool flipX = source.width < 0.0f;
-    bool flipY = source.height < 0.0f;
-    float srcW = std::fabs(source.width);
-    float srcH = std::fabs(source.height);
+    bool flipX = source.getWidth() < 0.0f;
+    bool flipY = source.getHeight() < 0.0f;
+    float srcW = std::fabs(source.getWidth());
+    float srcH = std::fabs(source.getHeight());
 
     float texW = static_cast<float>(texture.width);
     float texH = static_cast<float>(texture.height);
 
-    float u0 = source.pos.x / texW;
-    float v0 = source.pos.y / texH;
-    float u1 = (source.pos.x + srcW) / texW;
-    float v1 = (source.pos.y + srcH) / texH;
+    float u0 = source.getX()/ texW;
+    float v0 = source.getY() / texH;
+    float u1 = (source.getX() + srcW) / texW;
+    float v1 = (source.getY() + srcH) / texH;
 
     if (flipX) std::swap(u0, u1);
     if (flipY) std::swap(v0, v1);
 
-    Vector2 tl(-origin.x,              -origin.y);
-    Vector2 tr(dest.width - origin.x,  -origin.y);
-    Vector2 bl(-origin.x,              dest.height - origin.y);
-    Vector2 br(dest.width - origin.x,  dest.height - origin.y);
+    Vector2 tl(-origin.x, -origin.y);
+    Vector2 tr(dest.getWidth() - origin.x, -origin.y);
+    Vector2 bl(-origin.x, dest.getHeight() - origin.y);
+    Vector2 br(dest.getWidth() - origin.x, dest.getHeight() - origin.y);
 
     float rad = rotation * static_cast<float>(M_PI) / 180.0f;
     float c = std::cos(rad);
     float s = std::sin(rad);
 
     auto transform = [&](Vector2 p) {
-        return Vector2(p.x * c - p.y * s + dest.pos.x,
-                       p.x * s + p.y * c + dest.pos.y);
+        return Vector2(p.x * c - p.y * s + dest.getX(),
+                       p.x * s + p.y * c + dest.getY());
     };
 
     tl = transform(tl);
