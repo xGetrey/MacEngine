@@ -8,7 +8,6 @@
 #pragma once
 
 #include "../Vector2/Vector2.h"
-#include "../Time/Time.h"
 
 namespace Engine {
 struct Rect {
@@ -24,12 +23,11 @@ struct Rect {
     float getWidth() const;
     float getHeight() const;
 
-    // Ezek mindig a pos/width/height alapján számolnak, így sosem lehetnek elavultak
-    float getLeft() const;
-    float getRight() const;
-    float getTop() const;
-    float getBottom() const;
-    Vector2 getCenter() const;
+    float left() const;
+    float right() const;
+    float top() const;
+    float bottom() const;
+    Vector2 center() const;
 
     //Később majd megcsinálom
     bool contains(Vector2 point) const;
@@ -48,11 +46,12 @@ struct Rect {
     Rect& setHeight(float height);
     Rect& setSize(float width, float height);
 
+    /*
     Rect& move(Vector2 velocity, float dt = GetDeltaTime());
     Rect& move(float vx, float vy, float dt = GetDeltaTime());
     Rect& moveX(float vx, float dt = GetDeltaTime());
     Rect& moveY(float vy, float dt = GetDeltaTime());
-
     Rect& moveTo(Vector2 target, float speed, float dt = GetDeltaTime());
+    */
 };
 }

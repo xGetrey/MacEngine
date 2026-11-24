@@ -26,23 +26,23 @@ float Rect::getY() const {
     return pos.y;
 }
 
-float Rect::getLeft() const {
+float Rect::left() const {
     return pos.x;
 }
 
-float Rect::getTop() const {
+float Rect::top() const {
     return pos.y;
 }
 
-Vector2 Rect::getCenter() const {
+Vector2 Rect::center() const {
     return Vector2(pos.x + width / 2, pos.y + height / 2);
 }
 
-float Rect::getRight() const {
+float Rect::right() const {
     return pos.x + width;
 }
 
-float Rect::getBottom() const {
+float Rect::bottom() const {
     return pos.y + height;
 }
 
@@ -91,6 +91,8 @@ Rect& Rect::setSize(float width, float height) {
     return *this;
 }
 
+
+/*
 Rect& Rect::move(Vector2 velocity, float dt) {
     pos.x += velocity.x * dt;
     pos.y += velocity.y * dt;
@@ -126,5 +128,6 @@ Rect& Rect::moveTo(Vector2 target, float speed, float dt) {
     pos += toTarget * (step / distance);
     return *this;
 }
+*/
 
 }

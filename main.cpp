@@ -23,7 +23,7 @@ int main() {
         //rect1.moveTo({600.0f, 600.0f}, 100.0f);
         
         if (IsKeyDown(Key::D)) {
-            rect1.moveX(200.0f);
+            rect1.pos.x += 10.0f;
         }
         
         BeginDraw();
