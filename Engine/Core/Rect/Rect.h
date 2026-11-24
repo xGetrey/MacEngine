@@ -29,7 +29,6 @@ struct Rect {
     float bottom() const;
     Vector2 center() const;
 
-    //Később majd megcsinálom
     bool contains(Vector2 point) const;
     bool intersects(const Rect& other) const;
 
@@ -45,13 +44,5 @@ struct Rect {
     Rect& setWidth(float width);
     Rect& setHeight(float height);
     Rect& setSize(float width, float height);
-
-    /*
-    Rect& move(Vector2 velocity, float dt = GetDeltaTime());
-    Rect& move(float vx, float vy, float dt = GetDeltaTime());
-    Rect& moveX(float vx, float dt = GetDeltaTime());
-    Rect& moveY(float vy, float dt = GetDeltaTime());
-    Rect& moveTo(Vector2 target, float speed, float dt = GetDeltaTime());
-    */
 };
 }

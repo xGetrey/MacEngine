@@ -91,43 +91,15 @@ Rect& Rect::setSize(float width, float height) {
     return *this;
 }
 
-
-/*
-Rect& Rect::move(Vector2 velocity, float dt) {
-    pos.x += velocity.x * dt;
-    pos.y += velocity.y * dt;
-    return *this;
+bool Rect::intersects(const Rect &other) const {
+    return left() < other.right() &&
+    right() > other.left() &&
+    top() < other.bottom() &&
+    bottom() > other.top();
 }
 
-Rect& Rect::move(float vx, float vy, float dt) {
-    pos.x += vx * dt;
-    pos.y += vy * dt;
-    return *this;
+bool Rect::contains(Vector2 point) const {
+    return point.x < right() && point.x > left() && point.y > top() && point.y < bottom();
 }
-
-Rect& Rect::moveX(float vx, float dt) {
-    pos.x += vx * dt;
-    return *this;
-}
-
-Rect& Rect::moveY(float vy, float dt) {
-    pos.y += vy * dt;
-    return *this;
-}
-
-Rect& Rect::moveTo(Vector2 target, float speed, float dt) {
-    Vector2 toTarget = target - pos;
-    float distance = toTarget.length();
-    float step = speed * dt;
-    
-    if (distance <= step) {
-        pos = target;
-        return *this;
-    }
-
-    pos += toTarget * (step / distance);
-    return *this;
-}
-*/
 
 }
