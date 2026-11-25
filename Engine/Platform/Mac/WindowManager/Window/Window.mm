@@ -28,6 +28,7 @@
 }
 - (void)windowDidResignKey:(NSNotification *)notification {
     Engine::Internal::Input_ClearAll();
+    Engine::ClearPressedKeys();
 }
 @end
 
@@ -119,7 +120,9 @@ void Window::PollEvents() {
                                                  dequeue:YES]) {
         NSEventType type = event.type;
         if (type == NSEventTypeKeyDown || type == NSEventTypeKeyUp) {
-            Internal::Input_SetKey(TranslateLogicalKey(event.keyCode), type == NSEventTypeKeyDown);
+            bool down = (type == NSEventTypeKeyDown);
+            Key key = down ? LogicalKeyDown(event.keyCode) : LogicalKeyUp(event.keyCode);
+            Internal::Input_SetKey(key, down);
             bool cmd = (event.modifierFlags & NSEventModifierFlagCommand) != 0;
             if (!cmd) continue;
 

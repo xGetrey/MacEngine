@@ -14,6 +14,10 @@ namespace {
 
 Engine::Key s_LayoutTable[128];
 
+// keyCode → az a Key, amit lenyomáskor kapott. Felengedéskor ezt engedjük el,
+// így nem ragad be a billentyű, ha nyomva tartás közben kiosztást váltanak.
+Engine::Key s_PressedKeys[128] = {};
+
 }
 
 namespace Engine {
@@ -161,5 +165,31 @@ Key TranslateLogicalKey(unsigned short code) {
     if (isLetterOrDigit && code < 128) return s_LayoutTable[code];
 
     return physical;
+}
+
+Key LogicalKeyDown(unsigned short code) {
+    if (code >= 128) return TranslateLogicalKey(code);
+
+    // Már lenyomva van (pl. ismétlődő KeyDown nyomva tartáskor): az eredeti Key marad,
+    // akkor is, ha közben megváltozott a kiosztás
+    if (s_PressedKeys[code] != Key::Unknown) return s_PressedKeys[code];
+
+    Key key = TranslateLogicalKey(code);
+    s_PressedKeys[code] = key;
+    return key;
+}
+
+Key LogicalKeyUp(unsigned short code) {
+    if (code >= 128) return TranslateLogicalKey(code);
+
+    // Azt engedjük fel, amit lenyomáskor kapott, nem azt, amit a mostani kiosztás mondana
+    Key key = s_PressedKeys[code];
+    s_PressedKeys[code] = Key::Unknown;
+    return key != Key::Unknown ? key : TranslateLogicalKey(code);
+}
+
+void ClearPressedKeys() {
+    // Fókuszvesztéskor a KeyUp máshová megy, ezért elfelejtjük, mi volt lenyomva
+    for (int i = 0; i < 128; i++) s_PressedKeys[i] = Key::Unknown;
 }
 }
