@@ -34,6 +34,7 @@ target_link_libraries(MacEngine PUBLIC
     "-framework Cocoa"
     "-framework Metal"
     "-framework QuartzCore"
+    "-framework Carbon"
 )
 
 # 3. Példaprogram, csak akkor, ha ez a fő projekt (add_subdirectory-nél nem fordul le)

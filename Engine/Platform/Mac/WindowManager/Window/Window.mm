@@ -7,6 +7,7 @@
 
 #import "Window.h"
 #import <Cocoa/Cocoa.h>
+#include <Carbon/Carbon.h>
 
 #include <iostream>
 #include "../../Input/Input.h"
@@ -36,6 +37,7 @@ struct Window::Impl {
     NSWindow* nsWindow = nil;
     EngineWindowDelegate* delegate = nil;
     bool shouldClose = false;
+    id layoutObserver = nil;
 };
 
 Window::Window(int width, int height, const std::string& title) : m_Impl(std::make_unique<Impl>()) {
@@ -68,9 +70,16 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
     m_Impl->delegate = delegate;
     
     Internal::Time_Init();
+
+    RebuildLayoutTable();
+    m_Impl->layoutObserver = [[NSDistributedNotificationCenter defaultCenter]
+        addObserverForName:(__bridge NSString*)kTISNotifySelectedKeyboardInputSourceChanged
+                    object:nil
+                     queue:[NSOperationQueue mainQueue]
+                usingBlock:^(NSNotification*) { RebuildLayoutTable(); }];
+
     SetTargetFps(Engine::DisplayMetrics.GetDisplayHz());
     
-    // CMake-ből abszolút útvonalat kap, az Xcode-projekt a régi relatív útvonalat használja
 #ifdef MACENGINE_DEFAULT_ICON
     Window::Get().SetIcon(MACENGINE_DEFAULT_ICON);
 #else
@@ -85,6 +94,10 @@ Window::~Window() {
             [m_Impl->nsWindow setDelegate:nil];
             [m_Impl->nsWindow close];
             m_Impl->nsWindow = nil;
+        }
+        if (m_Impl->layoutObserver) {
+            [[NSDistributedNotificationCenter defaultCenter] removeObserver:m_Impl->layoutObserver];
+            m_Impl->layoutObserver = nil;
         }
         m_Impl->delegate = nil;
     }
@@ -106,7 +119,7 @@ void Window::PollEvents() {
                                                  dequeue:YES]) {
         NSEventType type = event.type;
         if (type == NSEventTypeKeyDown || type == NSEventTypeKeyUp) {
-            Internal::Input_SetKey(TranslateKey(event.keyCode), type == NSEventTypeKeyDown);
+            Internal::Input_SetKey(TranslateLogicalKey(event.keyCode), type == NSEventTypeKeyDown);
             bool cmd = (event.modifierFlags & NSEventModifierFlagCommand) != 0;
             if (!cmd) continue;
 
