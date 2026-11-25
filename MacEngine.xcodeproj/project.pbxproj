@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		FF4DEEAD308E618E00867503 /* main.txt in Sources */ = {isa = PBXBuildFile; fileRef = FF4DEEAC308E618800867503 /* main.txt */; };
 		FF67DE3B30B4D6CE0039459F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF67DE3A30B4D6CA0039459F /* main.cpp */; };
+		FF67DF5730B7482E0039459F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF67DF5630B7482E0039459F /* Cocoa.framework */; platformFilters = (macos, ); };
+		FF67DF5930B748390039459F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF67DF5830B748390039459F /* Carbon.framework */; platformFilters = (macos, ); };
 		FFCA5A0530A22FF7006907D2 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCA5A0430A22FF7006907D2 /* Metal.framework */; platformFilters = (ios, macos, tvos, xros, ); };
 		FFCA5A0730A2300D006907D2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCA5A0630A2300D006907D2 /* QuartzCore.framework */; platformFilters = (ios, macos, tvos, watchos, xros, ); };
 		FFF45D4330A9092F0058E26F /* main2.txt in Sources */ = {isa = PBXBuildFile; fileRef = FFF45D4230A909290058E26F /* main2.txt */; };
@@ -19,6 +21,8 @@
 		FF4DEEAC308E618800867503 /* main.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.txt; sourceTree = "<group>"; };
 		FF4DEEB2308E637800867503 /* CMakeList.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeList.txt; sourceTree = "<group>"; };
 		FF67DE3A30B4D6CA0039459F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FF67DF5630B7482E0039459F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		FF67DF5830B748390039459F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		FFCA5A0430A22FF7006907D2 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
 		FFCA5A0630A2300D006907D2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		FFF45D3F30A901890058E26F /* jungel_tree1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jungel_tree1.png; sourceTree = "<group>"; };
@@ -82,6 +86,8 @@
 		000000000000000130000000 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				FF67DF5930B748390039459F /* Carbon.framework in Frameworks */,
+				FF67DF5730B7482E0039459F /* Cocoa.framework in Frameworks */,
 				FFCA5A0730A2300D006907D2 /* QuartzCore.framework in Frameworks */,
 				FFCA5A0530A22FF7006907D2 /* Metal.framework in Frameworks */,
 			);
@@ -114,6 +120,8 @@
 		FFCA5A0330A22FF6006907D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF67DF5830B748390039459F /* Carbon.framework */,
+				FF67DF5630B7482E0039459F /* Cocoa.framework */,
 				FFCA5A0630A2300D006907D2 /* QuartzCore.framework */,
 				FFCA5A0430A22FF7006907D2 /* Metal.framework */,
 			);

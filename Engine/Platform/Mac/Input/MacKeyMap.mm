@@ -10,6 +10,12 @@
 #include <iostream>
 #include <IOKit/hidsystem/IOLLEvent.h>
 
+namespace {
+
+Engine::Key s_LayoutTable[128];
+
+}
+
 namespace Engine {
 Key TranslateKey(unsigned short code) {
     switch (code) {
@@ -105,5 +111,55 @@ bool IsModifierDown(unsigned short code, unsigned long flags) {
         case kVK_RightCommand: return (flags & NX_DEVICERCMDKEYMASK) != 0;
         default: return false;
     }
+}
+
+void RebuildLayoutTable() {
+    // 1. Minden hely "nem ismert", amíg ki nem derül, mi van rajta
+    for (int i = 0; i < 128; i++) s_LayoutTable[i] = Key::Unknown;
+
+    TISInputSourceRef source = TISCopyCurrentKeyboardLayoutInputSource();
+    if (!source) return;
+
+    CFDataRef data = (CFDataRef)TISGetInputSourceProperty(source, kTISPropertyUnicodeKeyLayoutData);
+    if (!data) { CFRelease(source); return; }
+    const UCKeyboardLayout* layout = (const UCKeyboardLayout*)CFDataGetBytePtr(data);
+
+    bool foundLatin = false;
+
+    for (UInt16 code = 0; code < 128; code++) {
+        UInt32 deadKeyState = 0;
+        UniChar chars[4];
+        UniCharCount length = 0;
+
+        OSStatus err = UCKeyTranslate(layout, code, kUCKeyActionDown,
+                                      0,
+                                      LMGetKbdType(),
+                                      kUCKeyTranslateNoDeadKeysMask,
+                                      &deadKeyState, 4, &length, chars);
+        if (err != noErr || length != 1) continue;
+
+        UniChar c = chars[0];
+        if (c >= 'a' && c <= 'z') {
+            s_LayoutTable[code] = static_cast<Key>(static_cast<int>(Key::A) + (c - 'a'));
+            foundLatin = true;
+        } else if (c >= '0' && c <= '9') {
+            s_LayoutTable[code] = static_cast<Key>(static_cast<int>(Key::Num0) + (c - '0'));
+        }
+    }
+
+    if (!foundLatin) {
+        for (UInt16 code = 0; code < 128; code++) s_LayoutTable[code] = TranslateKey(code);
+    }
+
+    CFRelease(source);
+}
+
+Key TranslateLogicalKey(unsigned short code) {
+    Key physical = TranslateKey(code);
+
+    bool isLetterOrDigit = physical >= Key::A && physical <= Key::Num9;
+    if (isLetterOrDigit && code < 128) return s_LayoutTable[code];
+
+    return physical;
 }
 }
