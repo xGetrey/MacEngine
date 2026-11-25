@@ -40,6 +40,10 @@ int main() {
             vector3.y -= 300.0f * GetDeltaTime();
         }
         
+        if (IsKeyPressed(Key::Z)) {
+            std::cout << "Z" << std::endl;
+        }
+        
         BeginDraw();
         
         DrawCircle(vector3, 5.0f, Color(255, 255, 255));

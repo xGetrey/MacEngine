@@ -86,8 +86,10 @@ Key TranslateKey(unsigned short code) {
 
             
         default:
+            #ifndef NDEBUG
             std::cout << "Unknown Input" << std::endl;
-            return Engine::Key::Unknow;
+            #endif
+            return Engine::Key::Unknown;
     }
 }
 
