@@ -6,7 +6,7 @@
 //
 
 #pragma once
-#include "KeyCodes.h"
+#include "../../../Core/Input/KeyCodes.h"
 
 namespace Engine {
 Key TranslateKey(unsigned short code);
