@@ -1,1 +1,8 @@
+.DS_Store
+build/
 cmake-build/
+*.xcodeproj/
+main.cpp
+main.txt
+main2.txt
+jungel_tree1.png

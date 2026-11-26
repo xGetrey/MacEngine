@@ -26,11 +26,6 @@ target_link_libraries(MacEngine PUBLIC
     "-framework Carbon"
 )
 
-if(PROJECT_IS_TOP_LEVEL)
-    add_executable(Example main.cpp)
-    target_link_libraries(Example PRIVATE MacEngine)
-endif()
-
 include(GNUInstallDirs)
 
 install(TARGETS MacEngine
