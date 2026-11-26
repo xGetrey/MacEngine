@@ -16,6 +16,12 @@ bool IsKeyDown(Key key);
 bool IsKeyPressed(Key key);
 bool IsKeyReleased(Key key);
 
+// Fizikai hely szerint: a Key az amerikai (US QWERTY) kiosztás helyét jelenti,
+// bármilyen kiosztás van beállítva. Mozgáshoz (WASD) ezt érdemes használni.
+bool IsPhysicalKeyDown(Key key);
+bool IsPhysicalKeyPressed(Key key);
+bool IsPhysicalKeyReleased(Key key);
+
 bool IsMouseButtonDown(MouseButton button);
 bool IsMouseButtonPressed(MouseButton button);
 bool IsMouseButtonReleased(MouseButton button);
@@ -31,6 +37,7 @@ float GetScrollY();
 namespace Internal {
 void Input_BeginFrame();
 void Input_SetKey(Key key, bool down);
+void Input_SetPhysicalKey(Key key, bool down);
 void Input_SetMouseButton(MouseButton button, bool down);
 void Input_SetMousePosition(float x, float y);
 void Input_AddMouseDelta(float dx, float dy);

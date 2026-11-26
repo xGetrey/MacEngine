@@ -9,6 +9,13 @@
 
 namespace Engine {
 
+// Egy Key kétféleképpen kérdezhető le:
+//  - IsKeyDown(Key::Z): a Z FELIRATÚ gomb az aktuális billentyűzetkiosztáson
+//    (magyar QWERTZ-n a Z feliratú, amerikain a Z feliratú gomb).
+//  - IsPhysicalKeyDown(Key::W): az amerikai (US QWERTY) W HELYÉN lévő gomb,
+//    kiosztástól függetlenül. Mozgáshoz (WASD) ezt érdemes használni,
+//    mert a bal kéz alatti négy gomb minden kiosztáson ugyanott van.
+// A nem betű/szám billentyűk (nyilak, Space, F1...) mindkét esetben ugyanazok.
 enum class Key {
     Unknown = 0,
     A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,

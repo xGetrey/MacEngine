@@ -15,6 +15,10 @@ constexpr int MouseCount = static_cast<int>(Engine::MouseButton::Count);
 bool s_Keys[KeyCount] = {};
 bool sPrevKeys[KeyCount] = {};
 
+// Ugyanez fizikai hely szerint (amerikai kiosztás), a kiosztástól függetlenül
+bool s_PhysicalKeys[KeyCount] = {};
+bool sPrevPhysicalKeys[KeyCount] = {};
+
 bool s_Mouses[MouseCount] = {};
 bool sPrevMouses[MouseCount] = {};
 
@@ -50,6 +54,24 @@ bool IsKeyReleased(Key key) {
     return !s_Keys[i] && sPrevKeys[i];
 }
 
+bool IsPhysicalKeyDown(Key key) {
+    int i = ToIndexKey(key);
+    if (!IsValidKey(i)) return false;
+    return s_PhysicalKeys[i];
+}
+
+bool IsPhysicalKeyPressed(Key key) {
+    int i = ToIndexKey(key);
+    if (!IsValidKey(i)) return false;
+    return s_PhysicalKeys[i] && !sPrevPhysicalKeys[i];
+}
+
+bool IsPhysicalKeyReleased(Key key) {
+    int i = ToIndexKey(key);
+    if (!IsValidKey(i)) return false;
+    return !s_PhysicalKeys[i] && sPrevPhysicalKeys[i];
+}
+
 bool IsMouseButtonDown(MouseButton button) {
     int i = ToIndexMouse(button);
     if (!IsValidMouse(i)) return false;
@@ -79,6 +101,7 @@ float GetScrollY() { return s_Scroll.y; }
 namespace Internal {
 void Input_BeginFrame() {
     std::copy(s_Keys, s_Keys + KeyCount, sPrevKeys);
+    std::copy(s_PhysicalKeys, s_PhysicalKeys + KeyCount, sPrevPhysicalKeys);
     std::copy(s_Mouses, s_Mouses + MouseCount, sPrevMouses);
 
     s_MouseDelta = Vector2(0, 0);
@@ -89,6 +112,12 @@ void Input_SetKey(Key key, bool down) {
     int i = ToIndexKey(key);
     if (!IsValidKey(i)) return;
     s_Keys[i] = down;
+}
+
+void Input_SetPhysicalKey(Key key, bool down) {
+    int i = ToIndexKey(key);
+    if (!IsValidKey(i)) return;
+    s_PhysicalKeys[i] = down;
 }
 
 void Input_SetMouseButton(MouseButton button, bool down) {
@@ -115,6 +144,8 @@ void Input_AddScroll(float x, float y) {
 void Input_ClearAll() {
     std::fill(s_Keys, s_Keys + KeyCount, false);
     std::fill(sPrevKeys, sPrevKeys + KeyCount, false);
+    std::fill(s_PhysicalKeys, s_PhysicalKeys + KeyCount, false);
+    std::fill(sPrevPhysicalKeys, sPrevPhysicalKeys + KeyCount, false);
 
     std::fill(s_Mouses, s_Mouses + MouseCount, false);
     std::fill(sPrevMouses, sPrevMouses + MouseCount, false);

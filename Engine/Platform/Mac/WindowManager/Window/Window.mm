@@ -123,13 +123,18 @@ void Window::PollEvents() {
             bool down = (type == NSEventTypeKeyDown);
             Key key = down ? LogicalKeyDown(event.keyCode) : LogicalKeyUp(event.keyCode);
             Internal::Input_SetKey(key, down);
+            Internal::Input_SetPhysicalKey(TranslateKey(event.keyCode), down);
             bool cmd = (event.modifierFlags & NSEventModifierFlagCommand) != 0;
             if (!cmd) continue;
 
         }
         
         if (type == NSEventTypeFlagsChanged) {
-            Internal::Input_SetKey(TranslateKey(event.keyCode), IsModifierDown(event.keyCode, event.modifierFlags));
+            // A módosítók nem függnek a kiosztástól: logikailag és fizikailag is ugyanazok
+            Key modifier = TranslateKey(event.keyCode);
+            bool down = IsModifierDown(event.keyCode, event.modifierFlags);
+            Internal::Input_SetKey(modifier, down);
+            Internal::Input_SetPhysicalKey(modifier, down);
         }
         
         switch (type) {
