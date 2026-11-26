@@ -16,8 +16,6 @@ bool IsKeyDown(Key key);
 bool IsKeyPressed(Key key);
 bool IsKeyReleased(Key key);
 
-// Fizikai hely szerint: a Key az amerikai (US QWERTY) kiosztás helyét jelenti,
-// bármilyen kiosztás van beállítva. Mozgáshoz (WASD) ezt érdemes használni.
 bool IsPhysicalKeyDown(Key key);
 bool IsPhysicalKeyPressed(Key key);
 bool IsPhysicalKeyReleased(Key key);
@@ -44,5 +42,5 @@ void Input_AddMouseDelta(float dx, float dy);
 void Input_AddScroll(float x, float y);
 void Input_ClearAll();
 
-} // Intrenal namespace
-} // Engine namespace
+}
+}

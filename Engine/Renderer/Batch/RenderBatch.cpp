@@ -30,8 +30,6 @@ Vertex* Batch_Allocate(size_t count, uint32_t texture) {
     size_t oldSize = s_Vertices.size();
     s_Vertices.resize(oldSize + count);
 
-    // Ha az előző parancs is ezt a textúrát használja, csak megnöveljük (egy rajzolási hívás marad).
-    // Ha más textúra jön, új parancsot kezdünk, ami pont ott indul, ahol az előző véget ért.
     if (!s_Commands.empty() &&
         s_Commands.back().texture == texture &&
         s_Commands.back().camera == s_CurrentCamera) {
@@ -51,11 +49,10 @@ const std::vector<DrawCommand>& Batch_GetCommands() {
     return s_Commands;
 }
 
-// A clear() megtartja a kapacitást, így a következő képkockában nem kell újrafoglalni
 void Batch_Clear() {
     s_Vertices.clear();
     s_Commands.clear();
-    s_Cameras.resize(1);    // csak a 0. (semleges) kamera marad
+    s_Cameras.resize(1);
     s_CurrentCamera = 0;
 }
 

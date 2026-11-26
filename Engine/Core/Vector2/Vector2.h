@@ -46,7 +46,6 @@ struct Vector2 {
     Vector2 copy() const;
     std::string toString() const;
     
-    //Aritmetikai
     Vector2& add(const Vector2 other);
     Vector2& subtract(const Vector2 other);
     Vector2& scale(const Vector2 other);

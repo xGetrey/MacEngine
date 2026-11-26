@@ -10,10 +10,9 @@
 namespace Engine {
 
 float GetDeltaTime();
-// Másodpercenkénti képkockák száma, fél másodpercenként frissítve (így olvasható, nem ugrál)
 int GetFPS();
 void SetTargetFps(int fps);
-int GetTargetFps();   // a beállított FPS-korlát, 0 = nincs korlát (alapértelmezett)
+int GetTargetFps();
 
 namespace Internal {
 void Time_Init();

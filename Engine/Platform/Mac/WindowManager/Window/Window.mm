@@ -51,7 +51,7 @@ struct Window::Impl {
 
 Window::Window(int width, int height, const std::string& title) : m_Impl(std::make_unique<Impl>()) {
     s_Instance = this;
-    [NSApplication sharedApplication]; //elindítja az alkalmazást
+    [NSApplication sharedApplication];
     [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
     
     NSRect frame = NSMakeRect(100, 100, width, height);
@@ -133,7 +133,6 @@ void Window::PollEvents() {
         }
         
         if (type == NSEventTypeFlagsChanged) {
-            // A módosítók nem függnek a kiosztástól: logikailag és fizikailag is ugyanazok
             Key modifier = TranslateKey(event.keyCode);
             bool down = IsModifierDown(event.keyCode, event.modifierFlags);
             Internal::Input_SetKey(modifier, down);
@@ -258,4 +257,4 @@ bool Window::SetIcon(const std::string filepath) {
     return true;
 }
 
-} // namespace Engine
+}

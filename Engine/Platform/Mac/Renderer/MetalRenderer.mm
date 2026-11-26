@@ -20,12 +20,10 @@
 #include <cmath>
 
 namespace {
-// A shader CameraData struktúrájának C++ megfelelője.
-// A simd_float2 ugyanúgy 8 bájtra igazodik, mint a Metal float2-je, így a kettő bájtra pontosan egyezik.
 struct CameraUniform {
     simd_float2 target;
     simd_float2 offset;
-    simd_float2 rotation;   // (cos, sin)
+    simd_float2 rotation;
     float zoom;
 };
 
@@ -35,17 +33,15 @@ CAMetalLayer* s_Layer = nil;
 NSView* ns_View = nil;
 MTLClearColor s_ClearColor = MTLClearColorMake(0, 0, 0, 1);
 id<MTLRenderPipelineState> s_Pipeline = nil;
-id<MTLLibrary> s_Library = nil;   // a lefordított shader, a pipeline újraépítéséhez megtartjuk
+id<MTLLibrary> s_Library = nil;
 
-// Élsimítás (MSAA): ide rajzolunk pixelenként több mintával, a végén ez olvad össze a drawable-be
 id<MTLTexture> s_MSAATexture = nil;
-NSUInteger s_SampleCount = 1;            // amivel a pipeline jelenleg készült
-NSUInteger s_RequestedSampleCount = 4;   // amit a fejlesztő kért (SetAntialiasing)
+NSUInteger s_SampleCount = 1;
+NSUInteger s_RequestedSampleCount = 4;
 
 id<MTLTexture> s_WhiteTexture = nil;
 std::vector<id<MTLTexture>> s_Textures;
 
-// A kért mintaszámhoz a legnagyobb, a GPU által támogatott értéket adja (8, 4, 2 vagy 1)
 NSUInteger ResolveSampleCount(NSUInteger requested) {
     const NSUInteger options[] = { 8, 4, 2 };
     for (NSUInteger count : options) {
@@ -54,16 +50,15 @@ NSUInteger ResolveSampleCount(NSUInteger requested) {
     return 1;
 }
 
-// A pipeline a mintaszámot is tartalmazza, ezért élsimítás váltásakor újra kell építeni
 bool BuildPipeline(NSUInteger sampleCount) {
     MTLRenderPipelineDescriptor* desc = [[MTLRenderPipelineDescriptor alloc] init];
     desc.vertexFunction = [s_Library newFunctionWithName:@"vs_main"];
     desc.fragmentFunction = [s_Library newFunctionWithName:@"fs_main"];
     desc.colorAttachments[0].pixelFormat = s_Layer.pixelFormat;
-    desc.rasterSampleCount = sampleCount;   // egyezzen az MSAA textúráéval
+    desc.rasterSampleCount = sampleCount;
 
     desc.colorAttachments[0].blendingEnabled = YES;
-    desc.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactorOne; /// Premultiplied alfa: a shader már szorozva adja az RGB-t
+    desc.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactorOne;
     desc.colorAttachments[0].destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
     desc.colorAttachments[0].sourceAlphaBlendFactor = MTLBlendFactorOne;
     desc.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
@@ -72,16 +67,15 @@ bool BuildPipeline(NSUInteger sampleCount) {
     id<MTLRenderPipelineState> pipeline = [s_Device newRenderPipelineStateWithDescriptor:desc error:&error];
     if (!pipeline) {
         NSLog(@"Pipeline hiba: %@", error);
-        return false;   // a régi pipeline marad érvényben
+        return false;
     }
 
     s_Pipeline = pipeline;
     s_SampleCount = sampleCount;
-    s_MSAATexture = nil;   // az EnsureMSAATexture az új mintaszámmal hozza létre újra
+    s_MSAATexture = nil;
     return true;
 }
 
-// Az MSAA textúra mérete mindig egyezzen a drawable méretével (átméretezés, kijelzőváltás)
 void EnsureMSAATexture(NSUInteger width, NSUInteger height) {
     if (s_SampleCount <= 1) return;
     if (s_MSAATexture && s_MSAATexture.width == width && s_MSAATexture.height == height) return;
@@ -94,8 +88,6 @@ void EnsureMSAATexture(NSUInteger width, NSUInteger height) {
     d.sampleCount = s_SampleCount;
     d.usage = MTLTextureUsageRenderTarget;
 
-    // Apple Silicon-on a memoryless textúra a GPU belső tile memóriájában él, nem foglal RAM-ot,
-    // így az MSAA szinte ingyen van. Intel Mac-en ez nem támogatott, ott privát memória kell.
     d.storageMode = [s_Device supportsFamily:MTLGPUFamilyApple7] ? MTLStorageModeMemoryless
                                                                  : MTLStorageModePrivate;
 
@@ -115,7 +107,6 @@ bool Renderer_Init(void* nativeWindow) {
     s_Layer.device = s_Device;
     s_Layer.pixelFormat = MTLPixelFormatBGRA8Unorm;
     s_Layer.contentsScale = window.backingScaleFactor;
-    // Átméretezés közben (amíg még a régi méretű kép látszik) se mosódjon el
     s_Layer.magnificationFilter = kCAFilterNearest;
 
     ns_View = window.contentView;
@@ -149,8 +140,6 @@ void SetClearColor(const Color& color) {
 }
 
 void SetAntialiasing(int samples) {
-    // Csak feljegyezzük; a pipeline-t a következő Present() építi újra.
-    // Így a Window létrehozása előtt és futás közben is hívható.
     s_RequestedSampleCount = samples < 1 ? 1 : static_cast<NSUInteger>(samples);
 }
 
@@ -160,16 +149,13 @@ int GetAntialiasing() {
 
 void Present() {
     @autoreleasepool {
-        // Ha a fejlesztő más élsimítást kért, mint amivel a pipeline készült, újraépítjük
         NSUInteger wanted = ResolveSampleCount(s_RequestedSampleCount);
         if (wanted != s_SampleCount) BuildPipeline(wanted);
 
-        // Mindig az aktuális kijelző skálája (Retina ↔ sima monitor között áthúzva se mosódjon el)
         CGFloat scale = ns_View.window.backingScaleFactor;
         CGSize size = ns_View.bounds.size;
         CGSize drawableSize = CGSizeMake(size.width * scale, size.height * scale);
 
-        // Csak változáskor állítjuk, mert a drawableSize beállítása új textúrák foglalását okozhatja
         if (s_Layer.contentsScale != scale) s_Layer.contentsScale = scale;
         if (!CGSizeEqualToSize(s_Layer.drawableSize, drawableSize)) s_Layer.drawableSize = drawableSize;
 
@@ -177,8 +163,6 @@ void Present() {
 
         id<CAMetalDrawable> drawable = [s_Layer nextDrawable];
         if (!drawable) {
-            // Nincs mire rajzolni (pl. kicsinyített ablak): a csúcsokat akkor is el kell dobni,
-            // különben a következő képkockában halmozódnának
             Internal::Batch_Clear();
             return;
         }
@@ -187,8 +171,8 @@ void Present() {
 
         MTLRenderPassDescriptor* pass = [MTLRenderPassDescriptor renderPassDescriptor];
         if (s_SampleCount > 1) {
-            pass.colorAttachments[0].texture = s_MSAATexture;           // ide rajzol (több minta/pixel)
-            pass.colorAttachments[0].resolveTexture = drawable.texture; // ide olvasztja össze
+            pass.colorAttachments[0].texture = s_MSAATexture;
+            pass.colorAttachments[0].resolveTexture = drawable.texture;
             pass.colorAttachments[0].storeAction = MTLStoreActionMultisampleResolve;
         } else {
             pass.colorAttachments[0].texture = drawable.texture;
@@ -206,10 +190,10 @@ void Present() {
             id<MTLBuffer> vb = [s_Device newBufferWithBytes:vertices.data()
                                                      length:vertices.size() * sizeof(Internal::Vertex)
                                                     options:MTLResourceStorageModeShared];
-            [enc setVertexBuffer:vb offset:0 atIndex:0];        // → [[buffer(0)]]
+            [enc setVertexBuffer:vb offset:0 atIndex:0];
 
             simd_float2 viewport = { (float)size.width, (float)size.height };
-            [enc setVertexBytes:&viewport length:sizeof(viewport) atIndex:1];   // → [[buffer(1)]]
+            [enc setVertexBytes:&viewport length:sizeof(viewport) atIndex:1];
 
             const auto& cameras = Internal::Batch_GetCameras();
             for (const auto& command : Internal::Batch_GetCommands()) {
@@ -218,7 +202,6 @@ void Present() {
                     texture = s_Textures[command.texture];
                 }
 
-                // A parancs saját kamerája → [[buffer(2)]]
                 const Camera2D& cam = cameras[command.camera];
                 float rad = cam.rotation * static_cast<float>(M_PI) / 180.0f;
                 CameraUniform camera = {

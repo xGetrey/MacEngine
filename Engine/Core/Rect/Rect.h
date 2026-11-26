@@ -11,7 +11,6 @@
 
 namespace Engine {
 struct Rect {
-    // Szabadon írható adatok: rect.pos.x = 7.0f vagy rect.setX(7.0f), ahogy tetszik
     Vector2 pos;
     float width;
     float height;

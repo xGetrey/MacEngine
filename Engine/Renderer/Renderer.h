@@ -20,10 +20,8 @@ void EndDraw();
 void BeginCamera(const Camera2D& camera);
 void EndCamera();
 
-// Élsimítás (MSAA) mintaszáma: 1 = kikapcsolva, 2, 4 (alapértelmezett) vagy 8.
-// Bármikor hívható; ha a GPU nem támogatja, a legközelebbi kisebb támogatott értéket használja.
 void SetAntialiasing(int samples);
-int GetAntialiasing();   // a ténylegesen használt mintaszám
+int GetAntialiasing();
 
 namespace Internal {
 bool Renderer_Init(void* nativeWindow);

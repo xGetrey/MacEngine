@@ -21,12 +21,10 @@ struct Texture {
 };
 
 Texture LoadTexture(const char* path);
-// Memóriában lévő képből: pixelenként 4 bájt (R, G, B, A), soronként balról jobbra, fentről lefelé
 Texture LoadTextureFromPixels(const uint8_t* rgba, int width, int height);
 void UnloadTexture(Texture& texture);
 
 void DrawTexture(const Texture& texture, Vector2 position, const Color& color);
-// rotation: fokban, a bal felső sarok körül. scale: 1 = eredeti méret, 2 = kétszeres.
 void DrawTextureEx(const Texture& texture, Vector2 position, float rotation, float scale, const Color& color);
 void DrawTexturePro(const Texture& texture, Rect source, Rect dest, Vector2 origin, float rotation, const Color& color);
 

@@ -15,7 +15,6 @@ constexpr int MouseCount = static_cast<int>(Engine::MouseButton::Count);
 bool s_Keys[KeyCount] = {};
 bool sPrevKeys[KeyCount] = {};
 
-// Ugyanez fizikai hely szerint (amerikai kiosztás), a kiosztástól függetlenül
 bool s_PhysicalKeys[KeyCount] = {};
 bool sPrevPhysicalKeys[KeyCount] = {};
 
@@ -27,10 +26,10 @@ Engine::Vector2 s_MouseDelta = Engine::Vector2(0, 0);
 Engine::Vector2 s_Scroll = Engine::Vector2(0, 0);
 
 int ToIndexKey(Engine::Key key) { return static_cast<int>(key); }
-bool IsValidKey(int i) {return  i > 0 && i < KeyCount;}   // a 0 az Unknown
+bool IsValidKey(int i) {return  i > 0 && i < KeyCount;}
 
 int ToIndexMouse(Engine::MouseButton button) { return static_cast<int>(button); }
-bool IsValidMouse(int i) { return i >= 0 && i < MouseCount; }   // a 0 a Left, az is érvényes
+bool IsValidMouse(int i) { return i >= 0 && i < MouseCount; }
 
 }
 
@@ -154,5 +153,5 @@ void Input_ClearAll() {
     s_Scroll = Vector2(0, 0);
 }
 
-} // Internal namespace
+}
 }

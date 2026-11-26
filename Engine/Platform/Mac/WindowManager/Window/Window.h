@@ -49,4 +49,4 @@ private:
     static inline Window* s_Instance = nullptr;
 };
 
-} // namespace Engine
+}

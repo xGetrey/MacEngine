@@ -4,8 +4,6 @@
 //
 //  Created by Gulyás Péter István on 2026. 11. 15..
 //
-//  Egyszerű alakzatok kirajzolása. Minden koordináta pixelben, a bal felső sarok a (0, 0).
-//
 
 #pragma once
 

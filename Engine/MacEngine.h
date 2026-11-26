@@ -33,4 +33,4 @@ inline int GetHeight() {
     return Window::Get().GetWindowHeight();
 }
 
-} // Engine namespace
+}

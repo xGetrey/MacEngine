@@ -10,8 +10,8 @@
 #include "Batch/RenderBatch.h"
 
 namespace {
-bool s_Drawing = false;   // BeginDraw és EndDraw között true
-bool s_CameraActive = false;   // BeginCamera és EndCamera között true
+bool s_Drawing = false;
+bool s_CameraActive = false;
 }
 
 namespace Engine {

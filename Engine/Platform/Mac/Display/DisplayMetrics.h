@@ -28,8 +28,8 @@ public:
     static bool isHDRSupported();
 };
 
-} // namespace Detail
+}
 
 inline Detail::DisplayMetricsImpl DisplayMetrics;
 
-} // namespace Engine
+}

@@ -16,7 +16,6 @@
 
 namespace Engine::Internal {
 
-// Egy csúcs: 6 float egymás után, rés nélkül (a shaderben packed_float2 + packed_float4)
 struct Vertex {
     Vector2 position;
     Color color;
@@ -31,8 +30,6 @@ struct DrawCommand {
     uint32_t camera;
 };
 
-// count darab csúcsnak foglal helyet, és az első új csúcsra mutató pointert adja vissza.
-// A pointer csak a következő Batch_Allocate hívásig érvényes (a vector átköltözhet).
 Vertex* Batch_Allocate(size_t count, uint32_t texture = 0);
 
 const std::vector<Vertex>& Batch_GetVertices();

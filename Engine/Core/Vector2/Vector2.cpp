@@ -33,7 +33,6 @@ Vector2 Vector2::copy() const {
     return Vector2(x, y);
 }
 
-//Aritmetikai
 Vector2& Vector2::add(Vector2 other) {
     x += other.x;
     y += other.y;
@@ -84,7 +83,6 @@ Vector2 Vector2::divided(const Vector2 other) const {
     return Vector2(x / other.x, y / other.y);
 }
 
-//operators
 Vector2 Vector2::operator+(const Vector2 other) const {
     return added(other);
 }
@@ -122,7 +120,6 @@ Vector2& Vector2::operator/=(const Vector2 other) {
     return divide(other);
 }
 
-//float
 Vector2 Vector2::operator+(float value) const {
     return Vector2(x + value, y + value);
 }

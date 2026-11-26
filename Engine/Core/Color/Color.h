@@ -26,4 +26,4 @@ struct Color {
           alpha(alpha / 255.0f) {}
 };
 
-} // namespace Engine
+}

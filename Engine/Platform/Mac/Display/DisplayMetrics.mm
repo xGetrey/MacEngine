@@ -71,5 +71,5 @@ bool DisplayMetricsImpl::isHDRSupported() {
     return screen.maximumPotentialExtendedDynamicRangeColorComponentValue > 1.0;
 }
 
-} // namespace Engine
+}
 

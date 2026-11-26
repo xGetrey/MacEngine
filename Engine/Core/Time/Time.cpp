@@ -19,7 +19,6 @@ float s_DeltaTime = 0.0f;
 int s_TargetFPS = 0;
 Clock::time_point s_NextFrame;
 
-// FPS mérés: megszámoljuk a képkockákat egy fél másodperces ablakban
 int s_FPS = 0;
 int s_FrameCount = 0;
 float s_FPSTimer = 0.0f;
@@ -51,7 +50,6 @@ void Time_Init() {
 }
 
 void Time_BeginFrame() {
-    // 1. Várakozás, ha van FPS-korlát
     if (s_TargetFPS > 0) {
         auto frameDuration = std::chrono::duration_cast<Clock::duration>(
             std::chrono::duration<double>(1.0 / s_TargetFPS));
@@ -62,7 +60,6 @@ void Time_BeginFrame() {
             s_NextFrame = Clock::now();
         } else {
             std::this_thread::sleep_until(s_NextFrame - std::chrono::milliseconds(1));
-            // A maradék pontos kivárása
             while (Clock::now() < s_NextFrame) { }
         }
     }
@@ -71,7 +68,6 @@ void Time_BeginFrame() {
     s_DeltaTime = std::chrono::duration<float>(now - s_LastFrame).count();
     s_LastFrame = now;
 
-    // Az FPS-hez a valódi időt használjuk, a lenti 0.1-es korlát előtt
     s_FrameCount++;
     s_FPSTimer += s_DeltaTime;
     if (s_FPSTimer >= 0.5f) {
