@@ -15,6 +15,7 @@
 #include "../../../../Core/Time/Time.h"
 #include "../../Display/DisplayMetrics.h"
 #include "../../../../Renderer/Renderer.h"
+#include "DefaultIconData.h"
 
 @interface EngineWindowDelegate : NSObject <NSWindowDelegate>
 @property (nonatomic, assign) bool* shouldClosePtr;
@@ -33,6 +34,13 @@
 @end
 
 namespace Engine {
+
+static void SetDefaultIcon() {
+    NSData *data = [NSData dataWithBytes:Internal::kDefaultIcon
+                                  length:sizeof(Internal::kDefaultIcon)];
+    NSImage *icon = [[NSImage alloc] initWithData:data];
+    if (icon) [NSApp setApplicationIconImage:icon];
+}
 
 struct Window::Impl {
     NSWindow* nsWindow = nil;
@@ -80,12 +88,7 @@ Window::Window(int width, int height, const std::string& title) : m_Impl(std::ma
                 usingBlock:^(NSNotification*) { RebuildLayoutTable(); }];
 
     SetTargetFps(Engine::DisplayMetrics.GetDisplayHz());
-    
-#ifdef MACENGINE_DEFAULT_ICON
-    Window::Get().SetIcon(MACENGINE_DEFAULT_ICON);
-#else
-    Window::Get().SetIcon("Engine/MacEngineIcon.png");
-#endif
+    SetDefaultIcon();
 }
 
 Window::~Window() {
