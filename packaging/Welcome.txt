@@ -1,0 +1,5 @@
+Welcome to the MacEngine installer.
+
+MacEngine is a small 2D game framework for macOS, written in C++ and rendered with Metal.
+
+This installer copies the MacEngine library and headers to /usr/local, so you can use it in your own CMake projects.
