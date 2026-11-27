@@ -131,6 +131,4 @@ The second line is only needed if you used the installer.
 
 ## License
 
-MacEngine is licensed under the [zlib License](LICENSE), the same license raylib uses.
-
-You can use it for anything, including commercial games, and you can modify and redistribute it. Credit in your game is appreciated but not required.
+MacEngine is licensed under the [zlib License](LICENSE).
