@@ -129,6 +129,19 @@ sudo pkgutil --forget io.github.xgetrey.macengine.MacEngine
 
 The second line is only needed if you used the installer.
 
+## Roadmap
+
+- **0.2**: audio, text input
+- **Later**: gamepad support, Windows support
+
+## Feedback
+
+Found a bug or have an idea? Please open an [issue](https://github.com/xGetrey/MacEngine/issues).
+
+## Credits
+
+- Built-in font: [font8x8](https://github.com/dhepper/font8x8) by Daniel Hepper (public domain)
+
 ## License
 
 MacEngine is licensed under the [zlib License](LICENSE).
